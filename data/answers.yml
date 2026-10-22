@@ -1,0 +1,90 @@
+# Answer bank: recurring screening-form answers used by /fill-application,
+# /prep-queue and the Codex submission flow. Filled in by /onboard. They are
+# typed into real applications verbatim, so keep them truthful.
+#
+# Any value of UNCONFIRMED means the skill must STOP and ask rather than guess.
+# Never replace an UNCONFIRMED with a plausible answer: immigration and
+# eligibility answers are legal statements on a submitted application.
+#
+# Sensitive file: it stays on your computer. Do not commit it to a public repo.
+
+work_authorization:
+  # Mirror of data/profile.json workAuthorization.status, in form language.
+  status_summary: "UNCONFIRMED"            # e.g. "U.S. citizen", "Green card holder", "F-1 STEM OPT", "Requires H-1B sponsorship"
+  authorized_to_work_us: "UNCONFIRMED"     # Yes / No: authorized to work in the US right now
+  requires_current_sponsorship: "UNCONFIRMED"   # Yes / No
+  requires_future_sponsorship: "UNCONFIRMED"    # Yes / No: will you ever need an employer to sponsor a visa
+  visa_type: "UNCONFIRMED"                 # "None" for citizens and green card holders
+  country_of_citizenship: "UNCONFIRMED"
+  work_authorization_explanation: "UNCONFIRMED"  # one sentence some forms ask for
+  security_clearance_held: "No"
+  sponsorship_disclosure_preference: "Answer required questions truthfully; do not volunteer visa details in optional narrative."
+
+availability:
+  earliest_start_date: "UNCONFIRMED"
+  notice_period: "UNCONFIRMED"
+  job_types: ["fulltime"]                  # fulltime / internship / parttime / contract
+
+preferences:
+  willing_to_relocate: "UNCONFIRMED"
+  work_mode: "Open to on-site, hybrid, or remote"
+  preferred_location: "UNCONFIRMED"
+  salary_expectation: "Open, aligned with the posted range and market rate for the role"
+  # A number for forms that demand one. Check the dashboard's Salary benchmark
+  # panel (profile card) once a few hundred postings are in.
+  salary_number_usd: "UNCONFIRMED"
+
+education_details:
+  gpa_overall: ""          # leave blank to never enter a GPA
+  gpa_scale: "4.0"
+
+name_on_forms:
+  legal_name: "UNCONFIRMED"      # used for legal-name fields and background checks
+  preferred_name: ""
+  resume_and_signature: ""
+
+common_questions:
+  how_did_you_hear: "Company careers site"
+  linkedin: ""
+  github: ""
+  website: ""
+  references_available: "Available upon request"
+
+eeo_defaults:
+  # Voluntary self-identification. Default is to decline everything; fill in
+  # only what you want disclosed.
+  policy: "Prefer not to answer / Decline to self-identify unless a value is set below"
+  gender: ""
+  pronouns_when_required: ""
+  disability: ""
+  race_ethnicity: ""
+  hispanic_or_latino: ""
+  veteran_status: ""
+
+never_fill:
+  # The fill skill leaves these blank and flags them, regardless of what a form says:
+  - SSN or any government ID
+  - bank or payment details
+  - references' private contact details
+  - visa or EAD card numbers and projected document dates
+
+mailing_address:
+  # Only needed for forms that require it. Leave blank to have the skill ask.
+  address_line_1: ""
+  address_line_2: ""
+  city: ""
+  state: ""
+  postal_code: ""
+  country: ""
+
+employment_history_authority:
+  source: data/resume.json
+  complete_record: true    # employers absent from resume.json were never employers
+
+relatives_questions_default:
+  answer: "UNCONFIRMED"    # "Do relatives work here?" Set a standing answer or leave to be asked.
+
+autonomous_submission_authorization:
+  # Whether Codex may click Submit without a final review from you.
+  authorized: false
+  batch_submission_limit: 5

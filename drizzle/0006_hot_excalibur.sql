@@ -1,0 +1,1 @@
+ALTER TABLE `jobs` ADD `screened_out` text;

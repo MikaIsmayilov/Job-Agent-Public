@@ -1,0 +1,27 @@
+[
+  {
+    "site": "linkedin",
+    "title": "Data Analyst",
+    "company": "Acme Analytics",
+    "location": "Boston, MA",
+    "job_url": "https://www.linkedin.com/jobs/view/4012345678",
+    "job_url_direct": "https://boards.greenhouse.io/acmeanalytics/jobs/998877",
+    "description": "We are hiring an entry-level data analyst. You will write SQL against BigQuery, build Power BI and Tableau dashboards, and apply Python forecasting to support marketing analytics decisions across the organization.",
+    "date_posted": "2026-08-07",
+    "job_type": "fulltime",
+    "is_remote": true,
+    "min_amount": 70000,
+    "max_amount": 90000,
+    "currency": "USD",
+    "interval": "yearly"
+  },
+  {
+    "site": "indeed",
+    "title": "Business Analyst",
+    "company": "ShortDesc Inc",
+    "location": "Remote",
+    "job_url": "https://www.indeed.com/viewjob?jk=abc",
+    "description": "Too short.",
+    "date_posted": "2026-08-08"
+  }
+]

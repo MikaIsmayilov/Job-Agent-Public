@@ -1,0 +1,1 @@
+ALTER TABLE `jobs` ADD `status_changed_at` text;

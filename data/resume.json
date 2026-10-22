@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "updatedAt": "",
+  "_readme": "Single source of truth for facts about you. Filled in by /onboard from your resume; edit by hand any time, then rescore. Every tailored resume, cover letter and form answer may only use facts written here. See tests/fixtures/sample-resume.json for a filled example of the skills/gapRules format.",
+  "sourceFiles": [],
+  "notes": "",
+  "contact": {
+    "name": "",
+    "legalName": "",
+    "location": "",
+    "phone": "",
+    "email": "",
+    "linkedin": "",
+    "website": "",
+    "github": ""
+  },
+  "positioning": "",
+  "education": [],
+  "experience": [],
+  "projects": [],
+  "leadership": [],
+  "certifications": [],
+  "skillsLine": "",
+  "additionalTools": "",
+  "spokenLanguages": "",
+  "skills": [],
+  "gapRules": [],
+  "formatting": {
+    "sectionOrder": ["Education", "Experience", "Projects", "Skills"],
+    "showLocationInHeader": true,
+    "gpaRules": "",
+    "baseResume": "assets/Resume.docx"
+  }
+}

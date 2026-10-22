@@ -1,0 +1,145 @@
+{
+  "_note": "Fictional test profile: an entry-level analytics candidate on OPT targeting Boston or remote. Also a worked example of what /onboard writes to data/profile.json.",
+  "displayName": "Alex Rivera",
+  "initials": "AR",
+  "device": "macos",
+  "seniority": "entry",
+  "roleFamilies": [
+    {
+      "name": "Sports analytics",
+      "label": "Sports Analytics",
+      "titlePattern": "sports? (?:data |performance |insights? )?analy|esports|e-sports|gaming analy|sportsbook|motorsport|racing analy|player (?:performance|valuation|development) analy|scouting analy|basketball analy|football analy|baseball analy|hockey analy|soccer analy",
+      "descriptionPattern": "\\besports\\b|\\bsportsbook\\b|sports betting|player performance data|motorsport",
+      "boostSkills": [
+        "Machine learning"
+      ],
+      "strongBoost": 11,
+      "baseBoost": 7
+    },
+    {
+      "name": "Financial analysis",
+      "label": "Financial Analyst",
+      "titlePattern": "financial analyst|fp&a|finance analyst|treasury analyst|credit analyst|investment analyst",
+      "boostSkills": [
+        "Financial & market data"
+      ],
+      "strongBoost": 8,
+      "baseBoost": 1,
+      "impliedGap": "Financial modeling / accounting"
+    },
+    {
+      "name": "Marketing analytics",
+      "label": "Marketing Analytics",
+      "titlePattern": "marketing analy|growth analyst|growth marketing|campaign analyst|crm analyst|customer insight",
+      "boostSkills": [
+        "Marketing & engagement analytics"
+      ],
+      "strongBoost": 11,
+      "baseBoost": 6
+    },
+    {
+      "name": "Product analytics",
+      "label": "Product Analyst",
+      "titlePattern": "product analyst|product data analyst|product insights",
+      "boostSkills": [
+        "SQL & data warehousing",
+        "Dashboards & business intelligence"
+      ],
+      "strongBoost": 10,
+      "baseBoost": 6
+    },
+    {
+      "name": "Business intelligence",
+      "label": "BI Analyst",
+      "titlePattern": "business intelligence|\\bbi\\b analyst|bi analyst|bi developer|power bi|reporting analyst|reporting & analytics|data visualization",
+      "boostSkills": [
+        "Power BI & DAX",
+        "Dashboards & business intelligence"
+      ],
+      "strongBoost": 15,
+      "baseBoost": 9,
+      "blurb": "Power BI, SQL, automated reporting",
+      "probe": "Build and maintain refreshable Power BI dashboards with DAX measures, automate recurring operational reporting, and write SQL against the reporting data warehouse for stakeholders.",
+      "probeTitle": "Business Intelligence Analyst"
+    },
+    {
+      "name": "Data science",
+      "label": "Data Science / ML",
+      "titlePattern": "data scientist|machine learning analyst|\\bml\\b analyst|data science analyst|decision scientist",
+      "boostSkills": [
+        "Machine learning",
+        "Python"
+      ],
+      "strongBoost": 14,
+      "baseBoost": 8,
+      "blurb": "Python, gradient boosting, clustering",
+      "probe": "Apply machine learning in Python including logistic regression, gradient boosting and XGBoost, plus clustering and segmentation on large datasets.",
+      "probeTitle": "Data Scientist"
+    },
+    {
+      "name": "Research & insights",
+      "label": "Research & Insights",
+      "titlePattern": "market research|research analyst|insights analyst|program analyst|impact analyst",
+      "boostSkills": [
+        "Research & insight synthesis"
+      ],
+      "strongBoost": 11,
+      "baseBoost": 6
+    },
+    {
+      "name": "Data analytics",
+      "label": "Data Analyst",
+      "titlePattern": "data analyst|business analyst|decision science|operations analyst|strategy analyst|analytics consultant|analytics analyst|data & analytics|reporting specialist",
+      "boostSkills": [
+        "Python",
+        "SQL & data warehousing"
+      ],
+      "strongBoost": 12,
+      "baseBoost": 7,
+      "blurb": "SQL, Python, dashboards",
+      "probe": "Write SQL and Python with pandas to clean, validate and explore large operational datasets, build dashboards and data visualization, and surface anomalies for the analytics team.",
+      "probeTitle": "Data Analyst"
+    },
+    {
+      "name": "Product management",
+      "label": "Product Management",
+      "titlePattern": "product manager|associate product manager|\\bapm\\b",
+      "boostSkills": [
+        "AI application development"
+      ],
+      "strongBoost": 6,
+      "baseBoost": 3
+    },
+    {
+      "name": "Data analytics",
+      "titlePattern": "\\banalyst\\b|analytics",
+      "boostSkills": [
+        "Python",
+        "SQL & data warehousing"
+      ],
+      "strongBoost": 12,
+      "baseBoost": 7
+    }
+  ],
+  "coveragePattern": "statistic|regression|data analysis|analy[sz]\\w* (?:large |complex )?data|data analytics|analytics experience|reporting|visuali[sz]ation|metrics|\\bkpis?\\b|data[- ]driven|modeling|modelling",
+  "places": [
+    {
+      "label": "Boston, MA",
+      "match": [
+        "boston"
+      ]
+    },
+    {
+      "label": "Massachusetts",
+      "match": [
+        "massachusetts",
+        ", ma"
+      ]
+    }
+  ],
+  "remoteOk": true,
+  "workAuthorization": {
+    "status": "opt",
+    "holdsClearance": false
+  }
+}

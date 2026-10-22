@@ -1,0 +1,189 @@
+# Company career-site registry. One line per company; the connector for its ATS
+# does the rest. Grow this list by hand or with:  pnpm scrape:discover
+#
+# Fields per ATS:
+#   greenhouse / lever / ashby / workable / recruitee / smartrecruiters: token
+#   workday: tenant, wd (wd1/wd2/wd3/wd5), site
+#   phenom: base_url
+#   company_site (generic JSON-LD crawler): careers_url
+#
+# Entries failing verification are skipped at runtime with a logged warning —
+# a wrong token never breaks the run.
+
+companies:
+  # ---- Big 4 / consulting ----
+  - { name: "PwC", ats: phenom, base_url: "https://jobs-us.pwc.com" }
+  - { name: "Deloitte", ats: company_site, careers_url: "https://apply.deloitte.com/en_US/careers" }
+  - { name: "EY", ats: company_site, careers_url: "https://careers.ey.com/ey/search/?q=analyst" }
+  - { name: "KPMG US", ats: company_site, careers_url: "https://www.kpmguscareers.com/job-search/" }
+  - { name: "Accenture", ats: company_site, careers_url: "https://www.accenture.com/us-en/careers" }
+
+  # ---- Boston tech ----
+  - { name: "HubSpot", ats: greenhouse, token: "hubspotjobs" }
+  - { name: "Klaviyo", ats: greenhouse, token: "klaviyo" }
+  # DraftKings careers site 403s crawlers; its real ATS is Workday (found 2026-08-14).
+  - { name: "DraftKings", ats: workday, tenant: "draftkings", wd: "wd1", site: "DraftKings" }
+  - { name: "Toast", ats: greenhouse, token: "toast" }
+  - { name: "Wayfair", ats: company_site, careers_url: "https://www.aboutwayfair.com/careers", tags: [fortune500] }
+  - { name: "CarGurus", ats: greenhouse, token: "cargurus" }
+  - { name: "Rapid7", ats: company_site, careers_url: "https://careers.rapid7.com/jobs" }
+  - { name: "SimpliSafe", ats: greenhouse, token: "simplisafe" }
+  - { name: "Whoop", ats: company_site, careers_url: "https://www.whoop.com/us/en/careers/" }
+  - { name: "Chewy", ats: phenom, base_url: "https://careers.chewy.com", tags: [fortune500] }
+  - { name: "Datadog", ats: greenhouse, token: "datadog" }
+  - { name: "Snyk", ats: company_site, careers_url: "https://snyk.io/careers/" }
+  - { name: "Motional", ats: greenhouse, token: "motional" }
+  - { name: "Cengage", ats: company_site, careers_url: "https://jobs.cengagegroup.com" }
+
+  # ---- Big Tech ----
+  - { name: "Amazon", ats: amazon, tags: [fortune500] }
+  # Microsoft and Google first-party boards are JS-rendered SPAs with gated
+  # APIs (verified 2026-08: search endpoints return empty/404, no sitemaps).
+  # Their postings arrive via the LinkedIn / Google Jobs board scrapes, and
+  # data/sponsorship.yml tags them as established H-1B sponsors. Revisit if a
+  # public endpoint reappears.
+
+  # ---- National tech ----
+  - { name: "Ramp", ats: ashby, token: "ramp", tags: [startup] }
+  - { name: "Notion", ats: ashby, token: "notion", tags: [startup] }
+  - { name: "Linear", ats: ashby, token: "linear", tags: [startup] }
+  - { name: "Deel", ats: ashby, token: "deel", tags: [startup] }
+  - { name: "Vanta", ats: ashby, token: "vanta", tags: [startup] }
+  - { name: "OpenAI", ats: ashby, token: "openai" }
+  - { name: "Plaid", ats: lever, token: "plaid" }
+  - { name: "Palantir", ats: lever, token: "palantir" }
+  - { name: "Spotify", ats: lever, token: "spotify" }
+  - { name: "KAYAK", ats: company_site, careers_url: "https://careers.kayak.com" }
+  - { name: "Attentive", ats: greenhouse, token: "attentive" }
+  - { name: "Squarespace", ats: greenhouse, token: "squarespace" }
+  - { name: "Affirm", ats: greenhouse, token: "affirm" }
+  - { name: "Gusto", ats: greenhouse, token: "gusto" }
+
+  # ---- Finance / insurance (Boston-heavy) ----
+  - { name: "Fidelity", ats: workday, tenant: "fmr", wd: "wd1", site: "FidelityCareers", tags: [fortune500] }
+  - { name: "State Street", ats: workday, tenant: "statestreet", wd: "wd1", site: "Global", tags: [fortune500] }
+  - { name: "Liberty Mutual", ats: company_site, careers_url: "https://jobs.libertymutualgroup.com/careers/", tags: [fortune500] }
+  - { name: "MassMutual", ats: company_site, careers_url: "https://careers.massmutual.com", tags: [fortune500] }
+  - { name: "John Hancock / Manulife", ats: workday, tenant: "manulife", wd: "wd3", site: "MFCJH_Jobs" }
+  - { name: "Santander US", ats: workday, tenant: "santander", wd: "wd3", site: "SantanderCareers" }
+  # Wellington + MFS upgraded from company_site crawls to their real Workday
+  # boards (2026-08-16 discovery via direct links; endpoints verified) — ATS
+  # rows carry structured identity and can verify.
+  - { name: "Wellington Management", ats: workday, tenant: "wellington", wd: "wd5", site: "External" }
+  - { name: "MFS Investment Management", ats: workday, tenant: "mfs", wd: "wd1", site: "MFS-Careers" }
+
+  # ---- F500 retail / health ----
+  - { name: "CVS Health", ats: workday, tenant: "cvshealth", wd: "wd1", site: "CVS_Health_Careers", tags: [fortune500] }
+  - { name: "TJX", ats: workday, tenant: "tjx", wd: "wd1", site: "TJX_External", tags: [fortune500] }
+  - { name: "Staples", ats: phenom, base_url: "https://careers.staples.com" }
+  # Upgraded from phenom to the real Workday board (2026-08-16; verified).
+  - { name: "BJ's Wholesale", ats: workday, tenant: "bjswholesaleclub", wd: "wd1", site: "BJsCareers", tags: [fortune500] }
+  - { name: "Mass General Brigham", ats: workday, tenant: "massgeneralbrigham", wd: "wd1", site: "MGBExternal" }
+  - { name: "Boston Scientific", ats: company_site, careers_url: "https://jobs.bostonscientific.com", tags: [fortune500] }
+  - { name: "Vertex Pharmaceuticals", ats: workday, tenant: "vrtx", wd: "wd501", site: "vertex_careers", tags: [fortune500] }
+
+  # ---- Startups (fintech / data / AI — mostly on startup-native ATS boards) ----
+  - { name: "Mercury", ats: greenhouse, token: "mercury", tags: [startup] }
+  - { name: "Brex", ats: greenhouse, token: "brex", tags: [startup] }
+  - { name: "Scale AI", ats: greenhouse, token: "scaleai", tags: [startup] }
+  - { name: "Airbyte", ats: ashby, token: "airbyte", tags: [startup] }
+  - { name: "Sigma Computing", ats: greenhouse, token: "sigmacomputing", tags: [startup] }
+  - { name: "EliseAI", ats: ashby, token: "eliseai", tags: [startup] }
+  - { name: "Postscript", ats: greenhouse, token: "postscript", tags: [startup] }
+  - { name: "Alloy", ats: greenhouse, token: "alloy", tags: [startup] }
+  - { name: "Hex", ats: ashby, token: "hex", tags: [startup] }
+  - { name: "Hightouch", ats: ashby, token: "hightouch", tags: [startup] }
+  - { name: "Perplexity", ats: ashby, token: "perplexity", tags: [startup] }
+  - { name: "Harvey", ats: ashby, token: "harvey", tags: [startup] }
+  - { name: "Monte Carlo", ats: ashby, token: "montecarlodata", tags: [startup] }
+  - { name: "Starburst", ats: greenhouse, token: "starburst", tags: [startup] }
+
+  # ---- Consumer / other ----
+  - { name: "Bose", ats: smartrecruiters, token: "BoseCorporation" }
+  - { name: "Dunkin' (Inspire Brands)", ats: company_site, careers_url: "https://careers.inspirebrands.com" }
+  - { name: "New Balance", ats: company_site, careers_url: "https://jobs.newbalance.com" }
+
+  # ---- Boston-area + remote-first additions (discovery review 2026-08-13; every
+  # ---- endpoint curl-verified before commit) ----
+  - { name: "Emerson College", ats: workday, tenant: "emerson", wd: "wd5", site: "Emerson_College_Staff" }
+  - { name: "Tufts Medical Center", ats: workday, tenant: "tuftsmedicine", wd: "wd1", site: "Jobs" }
+  - { name: "HarbourVest", ats: workday, tenant: "harbourvest", wd: "wd5", site: "HVP" }
+  - { name: "Bain Capital", ats: workday, tenant: "baincapital", wd: "wd1", site: "External_Public" }
+  - { name: "Forrester", ats: workday, tenant: "forrester", wd: "wd501", site: "careers" }
+  - { name: "Haemonetics", ats: workday, tenant: "haemonetics", wd: "wd5", site: "HAE" }
+  - { name: "CrowdStrike", ats: workday, tenant: "crowdstrike", wd: "wd5", site: "crowdstrikecareers" }
+  - { name: "LPL Financial", ats: workday, tenant: "lplfinancial", wd: "wd1", site: "External" }
+  - { name: "FINRA", ats: workday, tenant: "finra", wd: "wd1", site: "FINRA" }
+  - { name: "Guidehouse", ats: workday, tenant: "guidehouse", wd: "wd1", site: "External" }
+  - { name: "Mercor", ats: ashby, token: "mercor", tags: [startup] }
+  - { name: "Lovable", ats: ashby, token: "lovable", tags: [startup] }
+  - { name: "Tutor Intelligence", ats: lever, token: "tutorintelligence", tags: [startup] }
+  # From the 2026-08-13 direct-link analysis (companies whose relevant postings
+  # were reaching us only as unverified LinkedIn copies):
+  - { name: "Eversource", ats: workday, tenant: "eversource", wd: "wd1", site: "ExternalSite" }
+  - { name: "Gartner", ats: workday, tenant: "gartner", wd: "wd5", site: "EXT" }
+  - { name: "Bright Horizons", ats: workday, tenant: "brighthorizons", wd: "wd5", site: "External-NorthAmerica" }
+
+  # ---- Sports + esports analytics (added 2026-08-14; endpoints verified) ----
+  - { name: "FanDuel", ats: greenhouse, token: "fanduel" }
+  - { name: "Riot Games", ats: greenhouse, token: "riotgames" }
+  - { name: "Epic Games", ats: greenhouse, token: "epicgames" }
+  - { name: "Genius Sports", ats: greenhouse, token: "geniussports" }
+  - { name: "Hudl", ats: greenhouse, token: "hudl" }
+  - { name: "Underdog Fantasy", ats: greenhouse, token: "underdogfantasy", tags: [startup] }
+  - { name: "PrizePicks", ats: greenhouse, token: "prizepicks", tags: [startup] }
+  - { name: "Cloud9", ats: greenhouse, token: "cloud9", tags: [startup] }
+  - { name: "Sleeper", ats: ashby, token: "sleeper", tags: [startup] }
+  # Betting / prediction-market operators (added 2026-08-14; endpoints verified)
+  - { name: "Rush Street Interactive", ats: greenhouse, token: "rushstreetinteractive" }
+  - { name: "Fanatics", ats: greenhouse, token: "fanaticsinc" }
+  - { name: "Kalshi", ats: ashby, token: "kalshi", tags: [startup] }
+  - { name: "Polymarket", ats: ashby, token: "polymarket", tags: [startup] }
+
+  # ---- Discovery review 2026-08-16 (selected from 138 proposals in
+  # ---- scraper/out/discovered-companies.yml; every endpoint verified against
+  # ---- the connector API before commit; Sporting KC dropped — tenant 422s) ----
+  # Boston / Massachusetts
+  - { name: "Huron Consulting Group", ats: workday, tenant: "huron", wd: "wd1", site: "huroncareers" }
+  - { name: "Harvard University", ats: smartrecruiters, token: "HarvardUniversity" }
+  - { name: "The Brattle Group", ats: greenhouse, token: "thebrattlegroup" }
+  - { name: "ClearView Healthcare Partners", ats: greenhouse, token: "clearviewhealthcarepartners" }
+  - { name: "Brown Brothers Harriman", ats: workday, tenant: "bbh", wd: "wd5", site: "BBH" }
+  - { name: "Biogen", ats: workday, tenant: "biibhr", wd: "wd3", site: "external" }
+  - { name: "Pfizer", ats: workday, tenant: "pfizer", wd: "wd1", site: "PfizerCareers", tags: [fortune500] }
+  - { name: "Bristol Myers Squibb", ats: workday, tenant: "bristolmyerssquibb", wd: "wd5", site: "BMS", tags: [fortune500] }
+  - { name: "UMass Memorial Health", ats: workday, tenant: "ummh", wd: "wd1", site: "Careers" }
+  - { name: "Worcester Polytechnic Institute", ats: workday, tenant: "wpi", wd: "wd5", site: "WPI_External_Career_Site" }
+  - { name: "Watts Water Technologies", ats: workday, tenant: "wattswater", wd: "wd5", site: "External" }
+  - { name: "The Hilb Group", ats: workday, tenant: "hilbgroup", wd: "wd5", site: "HG-Careers" }
+  - { name: "C&W Services", ats: workday, tenant: "cw", wd: "wd1", site: "External" }
+  - { name: "Avangrid", ats: workday, tenant: "iberdrola", wd: "wd3", site: "Iberdrola" }
+  - { name: "Ocean Spray", ats: workday, tenant: "oceanspray", wd: "wd5", site: "OceanSprayJobs" }
+  - { name: "Goodwin Procter", ats: workday, tenant: "goodwinprocter", wd: "wd5", site: "External_Careers" }
+  - { name: "Wood Mackenzie", ats: workday, tenant: "woodmac", wd: "wd3", site: "woodmaccareers" }
+  - { name: "Talbots (Knitwell Group)", ats: workday, tenant: "knitwellgroup", wd: "wd1", site: "US_Corporate_Jobs" }
+  # National finance (analyst-heavy boards)
+  - { name: "M&T Bank", ats: workday, tenant: "mtb", wd: "wd5", site: "MTB" }
+  - { name: "Huntington Bank", ats: workday, tenant: "huntington", wd: "wd12", site: "HNBcareers" }
+  - { name: "Ameriprise Financial", ats: workday, tenant: "ameriprise", wd: "wd5", site: "Ameriprise", tags: [fortune500] }
+  - { name: "Raymond James", ats: workday, tenant: "raymondjames", wd: "wd1", site: "RaymondJamesCareers", tags: [fortune500] }
+  - { name: "Western Alliance Bank", ats: workday, tenant: "westernalliancebank", wd: "wd5", site: "WAB" }
+  - { name: "FTI Consulting", ats: workday, tenant: "fticonsulting", wd: "wd108", site: "FTIConsultingCareers" }
+  - { name: "Best Egg", ats: lever, token: "BestEgg", tags: [startup] }
+  # Tech / AI
+  - { name: "Anthropic", ats: greenhouse, token: "anthropic" }
+  - { name: "NVIDIA", ats: workday, tenant: "nvidia", wd: "wd5", site: "NVIDIAExternalCareerSite", tags: [fortune500] }
+  - { name: "Autodesk", ats: workday, tenant: "autodesk", wd: "wd1", site: "Ext" }
+  - { name: "First Advantage", ats: workday, tenant: "firstadvantage", wd: "wd5", site: "FirstAdvantage" }
+  - { name: "HUBS", ats: ashby, token: "Hubs.is", tags: [startup] }
+  - { name: "Rogo", ats: ashby, token: "Rogo", tags: [startup] }
+  - { name: "TAKT", ats: ashby, token: "takt", tags: [startup] }
+  - { name: "Extend", ats: greenhouse, token: "extend", tags: [startup] }
+  # Media / marketing analytics
+  - { name: "NBCUniversal", ats: smartrecruiters, token: "NBCUniversal3" }
+  - { name: "Versant", ats: smartrecruiters, token: "Versant3" }
+  - { name: "Horizon Media", ats: workday, tenant: "horizonmedia", wd: "wd1", site: "CareerOpportunities" }
+  - { name: "Dentsu", ats: workday, tenant: "dentsuaegis", wd: "wd3", site: "DAN_GLOBAL" }
+  - { name: "Sony", ats: workday, tenant: "sonyglobal", wd: "wd1", site: "SonyGlobalCareers" }
+  # Sports tech
+  - { name: "GameChanger", ats: ashby, token: "gamechanger", tags: [startup] }

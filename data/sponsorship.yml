@@ -1,0 +1,27 @@
+# Curated company-level visa-sponsorship stances, used ONLY when a job posting
+# doesn't state its own policy. "likely" means the company has a substantial
+# public H-1B filing history (USCIS/DOL disclosure data) — it is NOT a promise
+# for any specific role. Match is a case-insensitive substring of the company name.
+
+companies:
+  - { match: "pwc", stance: likely, note: "Big 4 firm; historically among the largest H-1B sponsors (public USCIS data)" }
+  - { match: "deloitte", stance: likely, note: "Big 4 firm; historically among the largest H-1B sponsors (public USCIS data)" }
+  - { match: "ernst & young", stance: likely, note: "Big 4 firm; historically among the largest H-1B sponsors (public USCIS data)" }
+  - { match: "ey", stance: likely, note: "Big 4 firm; historically among the largest H-1B sponsors (public USCIS data)" }
+  - { match: "kpmg", stance: likely, note: "Big 4 firm; historically among the largest H-1B sponsors (public USCIS data)" }
+  - { match: "accenture", stance: likely, note: "Large consultancy with a substantial H-1B filing history (public USCIS data)" }
+  - { match: "fidelity", stance: likely, note: "Substantial H-1B filing history (public USCIS data)" }
+  - { match: "state street", stance: likely, note: "Substantial H-1B filing history (public USCIS data)" }
+  - { match: "cvs health", stance: likely, note: "Substantial H-1B filing history (public USCIS data)" }
+  - { match: "santander", stance: likely, note: "Substantial H-1B filing history (public USCIS data)" }
+  - { match: "liberty mutual", stance: likely, note: "Substantial H-1B filing history (public USCIS data)" }
+  - { match: "wayfair", stance: likely, note: "H-1B filing history (public USCIS data)" }
+  - { match: "hubspot", stance: likely, note: "H-1B filing history (public USCIS data)" }
+  - { match: "datadog", stance: likely, note: "H-1B filing history (public USCIS data)" }
+  - { match: "mass general brigham", stance: likely, note: "Large academic health system; sponsors H-1B in clinical/technical roles (public USCIS data)" }
+  - { match: "amazon", stance: likely, note: "Consistently the largest H-1B sponsor in the US (public USCIS data)" }
+  - { match: "microsoft", stance: likely, note: "Top-5 H-1B sponsor (public USCIS data)" }
+  - { match: "google", stance: likely, note: "Top-5 H-1B sponsor (public USCIS data)" }
+  - { match: "alphabet", stance: likely, note: "Top-5 H-1B sponsor (public USCIS data)" }
+  - { match: "apple", stance: likely, note: "Top-10 H-1B sponsor (public USCIS data)" }
+  - { match: "meta", stance: likely, note: "Top-10 H-1B sponsor (public USCIS data)" }

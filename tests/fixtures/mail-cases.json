@@ -1,0 +1,679 @@
+{
+  "_comment": "Shared mail-tracking cases. Run by scraper/tests/test_mail_parity.py (Python, local launchd check) and tests/mail-tracker.test.mjs (TypeScript, cloud cron) so the two implementations cannot drift. Add a case here whenever either tracker changes.",
+  "classify": [
+    {
+      "subject": "Update on your application to BrightHome",
+      "body": "Thank you for your interest in the Customer Experience Analyst position. Unfortunately, we have decided to move forward with other candidates at this time.",
+      "expect": "rejected"
+    },
+    {
+      "subject": "Interview invitation - Data Analyst",
+      "body": "Thank you for applying to Ledgerly. We'd like to schedule a call to discuss your application. Please share your availability for next week.",
+      "expect": "interview"
+    },
+    {
+      "subject": "We received your application",
+      "body": "Thank you for applying to the Business Analyst role at Fairway. Your application has been received.",
+      "expect": "confirmation"
+    },
+    {
+      "subject": "Thank you for Applying to Amazon!",
+      "body": "Thank you for applying. What happens next? If we decide to move forward with your application, the Amazon recruiting team will reach out to discuss next steps. Any updates to your application status will be reflected on your Application dashboard.",
+      "expect": "confirmation"
+    },
+    {
+      "subject": "Your Amazon application: action required",
+      "body": "Thank you for applying to Amazon. The next step is to complete an online assessment. Please finish it within 5 days.",
+      "expect": "interview"
+    },
+    {
+      "subject": "Weekly digest",
+      "body": "Top stories in tech this week.",
+      "expect": null
+    },
+    {
+      "subject": "Thank you for your interest in Lindell",
+      "body": "We regret to inform you that the Associate Analytics Engineer position has been closed.",
+      "expect": "rejected"
+    },
+    {
+      "subject": "Follow up",
+      "body": "Thank you for expressing your interest. We regret to inform you that we will not be taking your application further at this time.",
+      "expect": "rejected"
+    },
+    {
+      "subject": "Thank you for your interest",
+      "body": "We have reviewed your application carefully and would like to inform you we did not select you for further consideration for the role.",
+      "expect": "rejected"
+    },
+    {
+      "subject": "Thank you for applying to Northgate",
+      "body": "Thank you for your interest. Your application shows many outstanding qualities, but our team did not see a fit for your skills at this time.",
+      "expect": "rejected"
+    },
+    {
+      "subject": "Thank you for your interest",
+      "body": "Thank you for your interest in the Analyst opportunity. At this time, we are unable to consider you for the position.",
+      "expect": "rejected"
+    },
+    {
+      "subject": "Thank You from Pinboard",
+      "body": "After careful review, we've made the decision to not move\r\nforward with your candidacy for the Sales Incentives Analyst role.",
+      "expect": "rejected"
+    },
+    {
+      "subject": "Your application&nbsp;update",
+      "body": "We will&nbsp;not be moving&nbsp;forward with your application.",
+      "expect": "rejected"
+    },
+    {
+      "subject": "Thank You - Marlowes Job Application Update",
+      "body": "Our team has carefully considered your application, and we have decided not to move forward with your candidacy for this role.",
+      "expect": "rejected"
+    },
+    {
+      "subject": "Regarding your application with Best Nest for the Treasury Analyst",
+      "body": "Thank you for your interest in the Treasury Analyst position with Best Nest. We are unable to move forward with your candidacy at this time because we are not set up to sponsor employment visas.",
+      "expect": "rejected"
+    },
+    {
+      "subject": "Update on your application | Lendwise",
+      "body": "While we enjoyed learning about your career so far, we won’t be moving to the next stage of the process at this time.",
+      "expect": "rejected"
+    },
+    {
+      "subject": "Congratulations! You are invited to our screening process",
+      "body": "Thanks for your interest. To get to know you better, we'd like to move forward with the hiring process. You’re invited to participate in our screening process! Total questions (6)",
+      "expect": "interview"
+    },
+    {
+      "subject": "Your application was viewed by Farsight Strategy",
+      "body": "Your application was viewed by Farsight Strategy.",
+      "expect": null
+    }
+  ],
+  "companyNames": [
+    {
+      "company": "John Calloway / Maplelife",
+      "expect": [
+        "john calloway",
+        "maplelife"
+      ]
+    },
+    {
+      "company": "QZT, Inc.",
+      "expect": [
+        "qzt"
+      ]
+    },
+    {
+      "company": "CJ's Wholesale",
+      "expect": [
+        "cjs wholesale"
+      ]
+    },
+    {
+      "company": "B&Q",
+      "expect": [
+        "b and q"
+      ]
+    },
+    {
+      "company": "NorthStar Group",
+      "expect": [
+        "northstar group",
+        "northstar"
+      ]
+    },
+    {
+      "company": "Hum Group",
+      "expect": [
+        "hum group"
+      ]
+    },
+    {
+      "company": "Marlowes (Threadwell Group)",
+      "expect": [
+        "marlowes",
+        "threadwell group",
+        "threadwell"
+      ]
+    }
+  ],
+  "match": [
+    {
+      "jobs": [
+        {
+          "id": "1",
+          "company": "BrightHome",
+          "title": "CX Analyst",
+          "status": "applied"
+        },
+        {
+          "id": "2",
+          "company": "Ledgerly",
+          "title": "PM",
+          "status": "applied"
+        }
+      ],
+      "cases": [
+        {
+          "sender": "no-reply@brighthome.com",
+          "subject": "Your application",
+          "body": "body text",
+          "expect": [
+            "1"
+          ]
+        },
+        {
+          "sender": "careers@greenhouse.io",
+          "subject": "Update from Ledgerly recruiting",
+          "body": "",
+          "expect": [
+            "2"
+          ]
+        },
+        {
+          "sender": "newsletter@medium.com",
+          "subject": "Weekly digest",
+          "body": "unrelated",
+          "expect": []
+        }
+      ]
+    },
+    {
+      "jobs": [
+        {
+          "id": "1",
+          "company": "Best Nest",
+          "title": "Treasury Analyst",
+          "status": "applied"
+        },
+        {
+          "id": "2",
+          "company": "Hum Group",
+          "title": "Risk Analyst",
+          "status": "applied"
+        },
+        {
+          "id": "3",
+          "company": "Summit Media",
+          "title": "Analyst, Search Engine Marketing",
+          "status": "applied"
+        },
+        {
+          "id": "4",
+          "company": "Kestrel Media",
+          "title": "Data Analyst I",
+          "status": "applied"
+        },
+        {
+          "id": "5",
+          "company": "Gray Brothers Whitman",
+          "title": "Commodities Analyst",
+          "status": "applied"
+        }
+      ],
+      "cases": [
+        {
+          "sender": "a@lindell.com",
+          "subject": "Thanks",
+          "body": "Our human resources team. Best, Lindell",
+          "expect": []
+        },
+        {
+          "sender": "summitmedia@myworkday.com",
+          "subject": "Thank You for Your Interest in Summit Media",
+          "body": "",
+          "expect": [
+            "3"
+          ]
+        },
+        {
+          "sender": "\"GrayBrothersWhitman.DoNotReply\" <gbw@myworkday.com>",
+          "subject": "Follow up",
+          "body": "",
+          "expect": [
+            "5"
+          ]
+        }
+      ]
+    },
+    {
+      "jobs": [
+        {
+          "id": "1",
+          "company": "PlayField",
+          "title": "Data Scientist",
+          "status": "applied"
+        },
+        {
+          "id": "2",
+          "company": "PlayField",
+          "title": "Data Scientist, Pricing Models",
+          "status": "applied"
+        },
+        {
+          "id": "3",
+          "company": "PlayField",
+          "title": "Commercial Analyst - Gaming",
+          "status": "applied"
+        }
+      ],
+      "cases": [
+        {
+          "sender": "no-reply@playfield.com",
+          "subject": "Update",
+          "body": "Unfortunately we will not be moving forward with your application for the Commercial Analyst - Gaming role.",
+          "expect": [
+            "3"
+          ]
+        },
+        {
+          "sender": "no-reply@playfield.com",
+          "subject": "Update",
+          "body": "Unfortunately we will not be moving forward with your application for the Data Scientist, Pricing Models role.",
+          "expect": [
+            "2"
+          ]
+        },
+        {
+          "sender": "no-reply@playfield.com",
+          "subject": "Update",
+          "body": "Unfortunately we will not be moving forward with your application for the Data Scientist role.",
+          "expect": [
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "jobs": [
+        {
+          "id": "c1",
+          "company": "NorthStar Group",
+          "title": "Data & Product Analyst (Insights), NorthStar Debt Solutions",
+          "status": "applied"
+        },
+        {
+          "id": "t1",
+          "company": "Vekt",
+          "title": "Customer Success Analyst/Associate",
+          "status": "applied"
+        },
+        {
+          "id": "t2",
+          "company": "Vekt",
+          "title": "Implementation Analyst",
+          "status": "applied"
+        }
+      ],
+      "cases": [
+        {
+          "sender": "LinkedIn <jobs-noreply@linkedin.com>",
+          "subject": "Your application to Data & Product Analyst (Insights), NorthStar Debt Solutions at NorthStar",
+          "body": "Unfortunately, we will not be moving forward with your application.",
+          "expect": [
+            "c1"
+          ]
+        },
+        {
+          "sender": "Vekt Hiring Team <no-reply@ashbyhq.com>",
+          "subject": "Vekt Application Update",
+          "body": "Thank you for applying for the Customer Success Analyst role at Vekt. Unfortunately, we will not be moving forward.",
+          "expect": [
+            "t1"
+          ]
+        }
+      ]
+    }
+  ],
+  "evaluate": [
+    {
+      "name": "shared pipeline: rejection, interview, newsletter, unmatched confirmation",
+      "tracked": [
+        {
+          "id": "1",
+          "company": "BrightHome",
+          "title": "Customer Experience Analyst",
+          "status": "applied"
+        },
+        {
+          "id": "2",
+          "company": "Ledgerly",
+          "title": "PM",
+          "status": "applied"
+        },
+        {
+          "id": "3",
+          "company": "John Calloway / Maplelife",
+          "title": "Analyst",
+          "status": "interview"
+        }
+      ],
+      "messages": [
+        {
+          "sender": "no-reply@brighthome.com",
+          "subject": "Update on your application to BrightHome",
+          "body": "Thank you for your interest in the Customer Experience Analyst position. Unfortunately, we have decided to move forward with other candidates at this time."
+        },
+        {
+          "sender": "careers@ledgerly.com",
+          "subject": "Interview invitation - Data Analyst",
+          "body": "Thank you for applying to Ledgerly. We'd like to schedule a call to discuss your application. Please share your availability for next week."
+        },
+        {
+          "sender": "newsletter@medium.com",
+          "subject": "10 interview tips for analysts",
+          "body": "Read our newsletter about how to ace your next interview. Subscribe for more career content."
+        },
+        {
+          "sender": "careers@fairway.com",
+          "subject": "We received your application",
+          "body": "Thank you for applying to the Business Analyst role at Fairway. Your application has been received."
+        }
+      ],
+      "expect": {
+        "updates": {
+          "1": "rejected",
+          "2": "interview"
+        },
+        "notes": 0,
+        "reviews": []
+      }
+    },
+    {
+      "name": "full sender name beats a shared word",
+      "tracked": [
+        {
+          "id": "3",
+          "company": "John Calloway / Maplelife",
+          "title": "Analyst",
+          "status": "interview"
+        },
+        {
+          "id": "4",
+          "company": "Calloway Logistics",
+          "title": "Ops",
+          "status": "applied"
+        }
+      ],
+      "messages": [
+        {
+          "sender": "hr@callowaylogistics.com",
+          "subject": "Your Calloway application",
+          "body": "Thank you for your interest. Unfortunately, we have decided to move forward with other candidates."
+        }
+      ],
+      "expect": {
+        "updates": {
+          "4": "rejected"
+        },
+        "notes": 0,
+        "reviews": []
+      }
+    },
+    {
+      "name": "two jobs at one company, email names neither",
+      "tracked": [
+        {
+          "id": "5",
+          "company": "Ledgerly",
+          "title": "Data Analyst",
+          "status": "applied"
+        },
+        {
+          "id": "6",
+          "company": "Ledgerly",
+          "title": "Finance Analyst",
+          "status": "applied"
+        }
+      ],
+      "messages": [
+        {
+          "sender": "careers@ledgerly.com",
+          "subject": "Your application to Ledgerly",
+          "body": "Thank you for your interest in the position. Unfortunately, we have decided to move forward with other candidates at this time."
+        }
+      ],
+      "expect": {
+        "updates": {},
+        "notes": 1,
+        "reviews": [
+          {
+            "id": "67dc7e5160348e84e0ee",
+            "kind": "rejected",
+            "reason": "ambiguous",
+            "candidateIds": [
+              "5",
+              "6"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "email names a different role",
+      "tracked": [
+        {
+          "id": "1",
+          "company": "Pinnacle Automation",
+          "title": "Procurement Analyst",
+          "status": "applied"
+        }
+      ],
+      "messages": [
+        {
+          "sender": "Pinnacle Automation Hiring Team <no-reply@ashbyhq.com>",
+          "subject": "Pinnacle Automation Application Update",
+          "body": "Thank you for applying for the Supply Chain Operations Lead role at Pinnacle. Unfortunately, we will not be moving forward."
+        }
+      ],
+      "expect": {
+        "updates": {},
+        "notes": 1,
+        "reviews": [
+          {
+            "id": "33e1bc0476d1f19ca257",
+            "kind": "rejected",
+            "reason": "role_mismatch",
+            "candidateIds": [
+              "1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "same ambiguous reply twice gets the same review id",
+      "tracked": [
+        {
+          "id": "f1",
+          "company": "PlayField",
+          "title": "Data Analyst",
+          "status": "applied"
+        },
+        {
+          "id": "f2",
+          "company": "PlayField",
+          "title": "Business Analyst",
+          "status": "applied"
+        }
+      ],
+      "messages": [
+        {
+          "sender": "PlayField <no-reply@playfield.com>",
+          "subject": "Important information about your application to PlayField",
+          "body": "Unfortunately, we have decided to move forward with other candidates."
+        },
+        {
+          "sender": "PlayField <no-reply@playfield.com>",
+          "subject": "Important information about your application to PlayField",
+          "body": "Unfortunately, we have decided to move forward with other candidates."
+        }
+      ],
+      "expect": {
+        "updates": {},
+        "notes": 2,
+        "reviews": [
+          {
+            "id": "8158ec95074786fb947f",
+            "kind": "rejected",
+            "reason": "ambiguous",
+            "candidateIds": [
+              "f1",
+              "f2"
+            ]
+          },
+          {
+            "id": "8158ec95074786fb947f",
+            "kind": "rejected",
+            "reason": "ambiguous",
+            "candidateIds": [
+              "f1",
+              "f2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "only allowed transitions: no interview after rejection, confirmations only noted",
+      "tracked": [
+        {
+          "id": "r1",
+          "company": "Ledgerly",
+          "title": "Data Analyst",
+          "status": "rejected"
+        },
+        {
+          "id": "s1",
+          "company": "BrightHome",
+          "title": "Data Analyst",
+          "status": "interview"
+        }
+      ],
+      "messages": [
+        {
+          "sender": "careers@ledgerly.com",
+          "subject": "Interview invitation",
+          "body": "Thank you for applying to Ledgerly. We'd like to schedule a call. Please share your availability."
+        },
+        {
+          "sender": "no-reply@brighthome.com",
+          "subject": "Interview invitation",
+          "body": "Thank you for applying. We'd like to schedule a call. Please share your availability."
+        },
+        {
+          "sender": "no-reply@brighthome.com",
+          "subject": "We received your application",
+          "body": "Thank you for applying. Your application has been received."
+        }
+      ],
+      "expect": {
+        "updates": {},
+        "notes": 1,
+        "reviews": []
+      }
+    },
+    {
+      "name": "slash title is not a role mismatch",
+      "tracked": [
+        {
+          "id": "t1",
+          "company": "Vekt",
+          "title": "Customer Success Analyst/Associate",
+          "status": "applied"
+        }
+      ],
+      "messages": [
+        {
+          "sender": "Vekt Hiring Team <no-reply@ashbyhq.com>",
+          "subject": "Vekt Application Update",
+          "body": "Thank you for applying for the Customer Success Associate role at Vekt. Unfortunately, we will not be moving forward."
+        }
+      ],
+      "expect": {
+        "updates": {
+          "t1": "rejected"
+        },
+        "notes": 0,
+        "reviews": []
+      }
+    },
+    {
+      "name": "screening invite names a different role with 'as a' (HPX 2026-10-20)",
+      "tracked": [
+        {
+          "id": "h1",
+          "company": "Hollis Packard Enterprise",
+          "title": "Planning Analyst Graduate",
+          "status": "applied"
+        }
+      ],
+      "messages": [
+        {
+          "sender": "Hollis Packard Enterprise <recruiting@jobalerts.careers.hpx.com>",
+          "subject": "Congratulations! You are invited to our screening process",
+          "body": "Hi&nbsp;Alex Rivera,Thanks for your interest in joining us as a&nbsp;Financial Analyst I. In order to get to know you better, we'd like to move forward with the hiring process.&nbsp;You're invited to participate in our screening process!"
+        }
+      ],
+      "expect": {
+        "updates": {},
+        "notes": 1,
+        "reviews": [
+          {
+            "id": "b72d2652839ecaeae96f",
+            "kind": "interview",
+            "reason": "role_mismatch",
+            "candidateIds": [
+              "h1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "lowercase 'as a' phrase is not a role mention",
+      "tracked": [
+        {
+          "id": "a1",
+          "company": "Acme Analytics",
+          "title": "Pricing Analyst",
+          "status": "applied"
+        }
+      ],
+      "messages": [
+        {
+          "sender": "Acme Analytics Careers <careers@acme.com>",
+          "subject": "Your application to Acme Analytics",
+          "body": "Thank you for applying. As a reminder, we review every application carefully. Unfortunately, we will not be moving forward with your candidacy."
+        }
+      ],
+      "expect": {
+        "updates": {
+          "a1": "rejected"
+        },
+        "notes": 0,
+        "reviews": []
+      }
+    }
+  ],
+  "bodies": [
+    {
+      "_comment": "LinkedIn-style mail: the decision is only in the HTML part; style blocks and entities must not leak.",
+      "raw": "From: LinkedIn <jobs-noreply@linkedin.com>\r\nSubject: Your application to Data Analyst at NorthStar\r\nMIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary=\"x\"\r\n\r\n--x\r\nContent-Type: text/plain; charset=utf-8\r\n\r\nYour update from NorthStar\r\nView jobs similar to this one.\r\n--x\r\nContent-Type: text/html; charset=utf-8\r\n\r\n<html><head><style>.a{color:red}</style></head><body><p>Unfortunately,&nbsp;we won&rsquo;t be moving forward &amp; wish you well&#33;</p></body></html>\r\n--x--\r\n",
+      "sender": "LinkedIn <jobs-noreply@linkedin.com>",
+      "subject": "Your application to Data Analyst at NorthStar",
+      "contains": [
+        "Your update from NorthStar",
+        "Unfortunately, we won’t be moving forward & wish you well!"
+      ],
+      "excludes": [
+        "color:red",
+        "<p>",
+        "&nbsp;"
+      ]
+    }
+  ]
+}

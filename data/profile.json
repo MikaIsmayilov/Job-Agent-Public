@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "_note": "Written by /onboard. Targets and constraints only; facts about you live in data/resume.json. After editing, run a rescore (see README).",
+  "displayName": "",
+  "initials": "",
+  "device": "",
+  "seniority": "entry",
+  "roleFamilies": [],
+  "coveragePattern": "",
+  "places": [],
+  "remoteOk": true,
+  "workAuthorization": {
+    "status": "unset",
+    "holdsClearance": false
+  }
+}

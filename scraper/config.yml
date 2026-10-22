@@ -1,0 +1,163 @@
+# Job Agent scraper configuration. Edit freely — everything here is a knob.
+
+server:
+  # Local dashboard (pnpm dev) by default. If you deploy to Cloudflare, put the
+  # workers.dev URL here (see docs/CLOUDFLARE-DEPLOYMENT.md).
+  base_url: http://localhost:3000
+  # Token is read from the INGEST_TOKEN env var, falling back to ../.env
+
+search:
+  # /onboard fills locations, job_types and terms from your targets.
+  distance_miles: 50
+  locations: []                      # e.g. ["Boston, MA", "New York, NY"]
+  remote_location: "United States"   # second pass with is_remote=true
+  remote_ok: true
+  hours_old: 72                      # only postings from the last N hours (boards)
+  results_wanted_per_term: 20
+  # Every type listed here gets its own board search pass. Each added type
+  # multiplies board requests, so trim `terms` if LinkedIn starts rate-limiting.
+  job_types: ["fulltime"]
+  terms: []                          # e.g. ["data analyst", "business analyst"]
+
+boards:
+  # glassdoor is the noisiest and most block-prone; enable if you want more volume.
+  # zip_recruiter removed 2026-10-19: every request has returned 403 (Cloudflare block)
+  # since at least 2026-10-14, adding ~40 minutes of retries per run for zero jobs.
+  sites: ["indeed", "linkedin", "google"]
+  linkedin_fetch_description: true
+  country_indeed: "USA"
+  enforce_annual_salary: true    # normalize hourly/monthly pay to annual figures
+  # proxies: ["user:pass@host:port"]   # enable if LinkedIn 429s become frequent
+
+ats:
+  # Search terms are only used by connectors that support server-side search
+  # (workday, phenom). JSON-board connectors fetch everything and rely on the
+  # relevance/entry-level filters below.
+  per_company_limit: 60
+  detail_fetch_limit: 25             # max per-posting detail fetches (smartrecruiters/workday/phenom)
+
+entry_level:
+  # enabled: false keeps every seniority (for experienced searches); postings
+  # are still tagged entry/mid/senior and scored against data/profile.json.
+  enabled: true
+  # "manager" is excluded unless preceded by "product " (Associate Product Manager is entry-level)
+  exclude_title: '(?i)\b(senior|sr\.?|staff|principal|lead|director|head of|vp|vice president|architect)\b|\b(ii|iii|iv)\b|\b(?<!product )manager\b'
+  include_title: '(?i)\b(associate|junior|jr\.?|entry|graduate|early career|new grad|intern|analyst i)\b'
+  max_years_required: 2              # drop postings demanding more (new-grad bar: "0-2 years" passes, "3-5" does not)
+  keep_unknown: true                 # keep postings with no years signal (tagged experience_level=unknown)
+
+location:
+  # Drop-only heuristic: postings whose location contains any marker are
+  # discarded; US and ambiguous locations are kept.
+  exclude_markers:
+    - "United Kingdom"
+    - "London"
+    - "Canada"
+    - "Ontario"
+    - "Toronto"
+    - "Vancouver"
+    - "India"
+    - "Ireland"
+    # Santander global Workday feed leaks (no country/region code on these):
+    - "Boadilla"
+    - "Santiago"
+    # Australian state codes are 3 letters, so the 2-letter non-US region rule
+    # misses them (TJX "Mascot, NSW 2020" leak, 2026-08-13):
+    - "NSW"
+    - "Australia"
+    - "Sydney"
+    # Rush Street Interactive LatAm feed (2026-08-14):
+    - "Bogotá"
+    - "Bogota"
+    - "Colombia"
+    - "Dublin"
+    - "Germany"
+    - "France"
+    - "Paris"
+    - "Netherlands"
+    - "Amsterdam"
+    - "Australia"
+    - "Singapore"
+    - "Mexico"
+    - "Brazil"
+    - "Poland"
+    - "Spain"
+    - "Italy"
+    - "Israel"
+    - "Japan"
+    - "Turkey"
+    - "Istanbul"
+    - "EMEA"
+    - "APAC"
+    - "Redhill"
+    - "Milton Keynes"
+    - "Makati"
+    - "Manila"
+    - "Philippines"
+    - "Jakarta"
+    - "Indonesia"
+    - "Hong Kong"
+    - "Malaysia"
+    - "Kuala Lumpur"
+    - "Vietnam"
+    - "Thailand"
+    - "Bangkok"
+    - "Shanghai"
+    - "Beijing"
+    - "China"
+    - "Taiwan"
+    - "Seoul"
+    - "Korea"
+    - "Sweden"
+    - "Stockholm"
+    - "Denmark"
+    - "Norway"
+    - "Finland"
+    - "Switzerland"
+    - "Zurich"
+    - "Austria"
+    - "Belgium"
+    - "Portugal"
+    - "Czech"
+    - "Romania"
+    - "Hungary"
+    - "Argentina"
+    - "Colombia"
+    - "Chile"
+    - "Costa Rica"
+    - "Egypt"
+    - "Nigeria"
+    - "South Africa"
+    - "Dubai"
+    - "UAE"
+    - "Saudi"
+    - "Qatar"
+    - "Sydney"
+    - "Melbourne"
+    - "Bengaluru"
+    - "Mumbai"
+    - "New Delhi"
+    - "Berlin"
+    - "Munich"
+    - "Barcelona"
+    - "Madrid"
+    - "Milan"
+    - "Krakow"
+    - "Warsaw"
+    - "Lisbon"
+    - "Copenhagen"
+    - "Oslo"
+    - "Helsinki"
+    - "Brussels"
+
+prune:
+  # `prune` deletes stored jobs that fail current filters, plus untouched
+  # "new" postings older than this. Shortlisted/ready/applied jobs are never
+  # auto-removed.
+  stale_after_days: 21
+
+relevance:
+  # A posting is kept only if its title contains one of these tokens.
+  # /onboard fills this from your role families. Note a token must be a
+  # substring: "data science" does NOT match "data scientist".
+  title_keywords: []

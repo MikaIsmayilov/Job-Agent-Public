@@ -1,0 +1,719 @@
+{
+  "_note": "Fictional test candidate. Not a real person. Skill and gap rules exercise lib/matching.ts.",
+  "contact": {
+    "name": "Alex Rivera",
+    "email": "alex.rivera@example.com"
+  },
+  "experience": [
+    {
+      "id": "exp-sample",
+      "org": "Example Analytics Co",
+      "role": "Data Analyst",
+      "dates": "2025 – Present",
+      "bullets": [
+        {
+          "id": "sample-1",
+          "text": "Built SQL and Python reporting for an example business.",
+          "skills": []
+        }
+      ]
+    }
+  ],
+  "projects": [],
+  "skills": [
+    {
+      "id": "power-bi",
+      "label": "Power BI & DAX",
+      "aliases": [
+        "power bi",
+        "powerbi",
+        "dax",
+        "power query",
+        "microsoft fabric"
+      ],
+      "weight": 7,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "sql",
+      "label": "SQL & data warehousing",
+      "aliases": [
+        "sql",
+        "sql server",
+        "data warehouse",
+        "querying",
+        "stored procedure",
+        "ssms",
+        "sql server management studio"
+      ],
+      "weight": 7,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "gcp",
+      "label": "Google Cloud / BigQuery",
+      "aliases": [
+        "bigquery",
+        "big query",
+        "google cloud",
+        "gcp",
+        "google cloud platform"
+      ],
+      "weight": 5,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "excel",
+      "label": "Excel",
+      "aliases": [
+        "microsoft excel",
+        "ms excel",
+        "advanced excel",
+        "excel skills",
+        "excel spreadsheet",
+        "excel formulas",
+        "in excel",
+        "excel,",
+        "excel/",
+        "/excel",
+        "excel)",
+        "(excel",
+        "excel;",
+        "excel (",
+        "excel and",
+        "and excel",
+        "excel or",
+        "or excel"
+      ],
+      "weight": 5,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "python",
+      "label": "Python",
+      "aliases": [
+        "python",
+        "pandas",
+        "numpy",
+        "scikit-learn",
+        "sklearn"
+      ],
+      "weight": 7,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "experimentation",
+      "label": "Experiment design & causal inference",
+      "aliases": [
+        "a/b test",
+        "ab test",
+        "experimentation",
+        "randomized experiment",
+        "randomized controlled",
+        "causal inference",
+        "incrementality",
+        "fixed effects",
+        "treatment effect",
+        "hypothesis test",
+        "statistical significance",
+        "control group",
+        "experimental design"
+      ],
+      "weight": 7,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "machine-learning",
+      "label": "Machine learning",
+      "aliases": [
+        "machine learning",
+        "xgboost",
+        "lightgbm",
+        "gradient boosting",
+        "random forest",
+        "decision tree",
+        "logistic regression",
+        "predictive model",
+        "classification model",
+        "supervised learning"
+      ],
+      "weight": 7,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "dashboards",
+      "label": "Dashboards & business intelligence",
+      "aliases": [
+        "dashboard",
+        "business intelligence",
+        "bi analyst",
+        "data visualization",
+        "reporting suite",
+        "self-service analytics"
+      ],
+      "weight": 6,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "reporting-automation",
+      "label": "Reporting automation",
+      "aliases": [
+        "automate reporting",
+        "reporting automation",
+        "recurring report",
+        "manual reporting",
+        "automated dashboard",
+        "operational reporting"
+      ],
+      "weight": 6,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "data-quality",
+      "label": "Data cleaning & validation",
+      "aliases": [
+        "data cleaning",
+        "data quality",
+        "data validation",
+        "anomaly detection",
+        "data wrangling",
+        "data integrity",
+        "imputation"
+      ],
+      "weight": 6,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "stats-modeling",
+      "label": "Statistical modeling",
+      "aliases": [
+        "rstudio",
+        "r studio",
+        "statistical modeling",
+        "statistical analysis",
+        "regression analysis",
+        "applied statistics",
+        "ordinary least squares",
+        "panel data",
+        "econometric"
+      ],
+      "weight": 6,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "model-validation",
+      "label": "Model validation & backtesting",
+      "aliases": [
+        "backtest",
+        "holdout",
+        "cross-validation",
+        "train test split",
+        "model validation",
+        "overfitting",
+        "out-of-sample",
+        "model performance"
+      ],
+      "weight": 5,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "unsupervised",
+      "label": "Clustering & segmentation",
+      "aliases": [
+        "clustering",
+        "k-means",
+        "kmeans",
+        "segmentation",
+        "dimensionality reduction",
+        "unsupervised"
+      ],
+      "weight": 5,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "tableau",
+      "label": "Tableau",
+      "aliases": [
+        "tableau"
+      ],
+      "weight": 5,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "ml-deployment",
+      "label": "ML app deployment",
+      "aliases": [
+        "fastapi",
+        "rest api",
+        "docker",
+        "model deployment",
+        "deploy models",
+        "production model",
+        "full-stack",
+        "typescript",
+        "reactjs",
+        "react.js"
+      ],
+      "weight": 5,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "financial-data",
+      "label": "Financial & market data",
+      "aliases": [
+        "quarterly earnings",
+        "earnings report",
+        "earnings estimate",
+        "analyst estimate",
+        "compustat",
+        "crsp",
+        "wrds",
+        "equity research",
+        "financial data",
+        "capital markets",
+        "company fundamentals",
+        "equity fundamentals",
+        "accruals",
+        "securities"
+      ],
+      "weight": 5,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "customer-analytics",
+      "label": "Customer & account analytics",
+      "aliases": [
+        "customer insight",
+        "customer account",
+        "billing",
+        "arrears",
+        "churn",
+        "consumption analysis",
+        "customer behavior",
+        "purchase intent",
+        "consumer behavior"
+      ],
+      "weight": 5,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "forecasting",
+      "label": "Forecasting",
+      "aliases": [
+        "forecast",
+        "forecasting",
+        "demand planning",
+        "predictive analytics",
+        "pipeline visibility"
+      ],
+      "weight": 5,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "stakeholder",
+      "label": "Stakeholder & client management",
+      "aliases": [
+        "stakeholder",
+        "client management",
+        "account management",
+        "cross-functional",
+        "partnership",
+        "business partner"
+      ],
+      "weight": 5,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "research-insights",
+      "label": "Research & insight synthesis",
+      "aliases": [
+        "market research",
+        "research analyst",
+        "insights",
+        "qualitative research",
+        "impact measurement",
+        "competitive analysis",
+        "benchmarking",
+        "survey design"
+      ],
+      "weight": 5,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "marketing-analytics",
+      "label": "Marketing & engagement analytics",
+      "aliases": [
+        "marketing analytics",
+        "campaign analysis",
+        "campaign performance",
+        "customer engagement",
+        "audience engagement",
+        "engagement rate",
+        "community engagement",
+        "content marketing",
+        "social media",
+        "newsletter"
+      ],
+      "weight": 5,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "revenue-growth",
+      "label": "Revenue & commercial growth",
+      "aliases": [
+        "revenue growth",
+        "sales analytics",
+        "commercial analytics",
+        "business development",
+        "contract value",
+        "pricing strategy"
+      ],
+      "weight": 5,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "ai-apps",
+      "label": "AI application development",
+      "aliases": [
+        "generative ai",
+        "genai",
+        "llm",
+        "ai-powered",
+        "prompt engineering",
+        "chatbot"
+      ],
+      "weight": 5,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "ai-evaluation",
+      "label": "AI evaluation & red-teaming",
+      "aliases": [
+        "red team",
+        "red-teaming",
+        "red teaming",
+        "hallucination",
+        "llm evaluation",
+        "responsible ai",
+        "ai safety",
+        "eval framework",
+        "model eval",
+        "adversarial testing",
+        "rag evaluation"
+      ],
+      "weight": 5,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "nlp-sentiment",
+      "label": "NLP & sentiment analysis",
+      "aliases": [
+        "sentiment analysis",
+        "natural language processing",
+        "nlp",
+        "text mining",
+        "hugging face",
+        "text classification",
+        "unstructured text"
+      ],
+      "weight": 4,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "explainability",
+      "label": "Model explainability",
+      "aliases": [
+        "shap values",
+        "shapley",
+        "explainable",
+        "interpretability",
+        "feature importance",
+        "model explainability",
+        "black box model"
+      ],
+      "weight": 4,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "energy-utilities",
+      "label": "Energy & utilities domain",
+      "aliases": [
+        "energy sector",
+        "energy industry",
+        "energy supplier",
+        "energy market",
+        "utility company",
+        "utilities sector",
+        "ofgem",
+        "smart meter",
+        "tariff",
+        "renewable energy",
+        "electricity",
+        "natural gas"
+      ],
+      "weight": 4,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "leadership",
+      "label": "Team leadership",
+      "aliases": [
+        "team leadership",
+        "lead a team",
+        "led a team",
+        "mentoring",
+        "project manager",
+        "team lead"
+      ],
+      "weight": 4,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "program-ops",
+      "label": "Program & grant operations",
+      "aliases": [
+        "program management",
+        "grant application",
+        "grant eligibility",
+        "grantee",
+        "application review",
+        "eligibility criteria",
+        "operations coordination"
+      ],
+      "weight": 4,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "supply-chain",
+      "label": "Supply chain & network analysis",
+      "aliases": [
+        "supply chain",
+        "logistics",
+        "network analysis",
+        "trade network",
+        "sourcing",
+        "procurement",
+        "geospatial"
+      ],
+      "weight": 4,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "sports-analytics",
+      "label": "Sports performance analytics",
+      "aliases": [
+        "sports analytics",
+        "player performance",
+        "motorsport",
+        "athlete data"
+      ],
+      "weight": 4,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "web-apps",
+      "label": "Web app build & deployment",
+      "aliases": [
+        "streamlit",
+        "supabase",
+        "github",
+        "version control",
+        "web app"
+      ],
+      "weight": 3,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "erp",
+      "label": "SAP / ERP data",
+      "aliases": [
+        "sap erp",
+        "sap hana",
+        "sap bw",
+        "erp system"
+      ],
+      "weight": 3,
+      "evidence": [
+        "sample-1"
+      ]
+    },
+    {
+      "id": "creative-tools",
+      "label": "Creative & design tools",
+      "aliases": [
+        "adobe creative",
+        "photoshop",
+        "premiere pro",
+        "illustrator",
+        "video editing",
+        "creative cloud"
+      ],
+      "weight": 2,
+      "evidence": [
+        "sample-1"
+      ]
+    }
+  ],
+  "gapRules": [
+    {
+      "label": "Modern data stack (dbt / Snowflake / Airflow)",
+      "aliases": [
+        "dbt",
+        "snowflake",
+        "airflow",
+        "databricks",
+        "apache spark",
+        "pyspark",
+        "spark sql",
+        "data pipeline orchestration"
+      ]
+    },
+    {
+      "label": "Cloud data platforms (AWS / Azure)",
+      "aliases": [
+        " aws",
+        "(aws",
+        "aws cloud",
+        "amazon web services",
+        "azure",
+        "redshift",
+        "s3 bucket",
+        "cloud data warehouse"
+      ]
+    },
+    {
+      "label": "BI & product analytics tooling (Looker / Qlik / Amplitude)",
+      "aliases": [
+        "amplitude",
+        "mixpanel",
+        "heap analytics",
+        "pendo",
+        "looker",
+        "quicksight",
+        "qlik",
+        "qliksense",
+        "domo",
+        "microstrategy"
+      ]
+    },
+    {
+      "label": "Marketing attribution tooling",
+      "aliases": [
+        "google analytics",
+        "ga4",
+        "attribution model",
+        "media mix",
+        "paid media",
+        "adwords",
+        "salesforce marketing"
+      ]
+    },
+    {
+      "label": "Financial modeling / accounting",
+      "aliases": [
+        "financial modeling",
+        "three-statement",
+        "3-statement",
+        "gaap",
+        "accounting",
+        "fp&a",
+        "corporate finance",
+        "variance analysis"
+      ]
+    },
+    {
+      "label": "Enterprise agile delivery",
+      "aliases": [
+        "jira",
+        "scrum",
+        "agile delivery",
+        "confluence",
+        "sprint planning",
+        "product owner"
+      ]
+    },
+    {
+      "label": "Software / data engineering at scale",
+      "aliases": [
+        "java ",
+        "java,",
+        "java.",
+        "java/",
+        "core java",
+        "scala ",
+        "scala,",
+        "scala/",
+        "c++",
+        "kubernetes",
+        "terraform",
+        "microservice",
+        "ci/cd",
+        "distributed system"
+      ]
+    }
+  ]
+}

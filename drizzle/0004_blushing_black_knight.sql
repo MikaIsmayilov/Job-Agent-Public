@@ -1,0 +1,1 @@
+ALTER TABLE `jobs` ADD `red_flags_json` text DEFAULT '[]' NOT NULL;
