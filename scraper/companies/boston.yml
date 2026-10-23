@@ -1,0 +1,55 @@
+# Regional company pack: Boston / Massachusetts. Loaded only when config.yml
+# `ats.regions` includes "boston". Same fields as scraper/companies.yml. Every
+# endpoint was verified against its connector when it was added (2026-08).
+
+companies:
+  - { name: "Wayfair", ats: company_site, careers_url: "https://www.aboutwayfair.com/careers", tags: [fortune500] }
+  - { name: "CarGurus", ats: greenhouse, token: "cargurus" }
+  - { name: "Rapid7", ats: company_site, careers_url: "https://careers.rapid7.com/jobs" }
+  - { name: "SimpliSafe", ats: greenhouse, token: "simplisafe" }
+  - { name: "Whoop", ats: company_site, careers_url: "https://www.whoop.com/us/en/careers/" }
+  - { name: "Snyk", ats: company_site, careers_url: "https://snyk.io/careers/" }
+  - { name: "Motional", ats: greenhouse, token: "motional" }
+  - { name: "Cengage", ats: company_site, careers_url: "https://jobs.cengagegroup.com" }
+  - { name: "State Street", ats: workday, tenant: "statestreet", wd: "wd1", site: "Global", tags: [fortune500] }
+  - { name: "Liberty Mutual", ats: company_site, careers_url: "https://jobs.libertymutualgroup.com/careers/", tags: [fortune500] }
+  - { name: "MassMutual", ats: company_site, careers_url: "https://careers.massmutual.com", tags: [fortune500] }
+  - { name: "Santander US", ats: workday, tenant: "santander", wd: "wd3", site: "SantanderCareers" }
+  # Wellington + MFS upgraded from company_site crawls to their real Workday
+  # boards (2026-08-16 discovery via direct links; endpoints verified) — ATS
+  # rows carry structured identity and can verify.
+  - { name: "Wellington Management", ats: workday, tenant: "wellington", wd: "wd5", site: "External" }
+  - { name: "MFS Investment Management", ats: workday, tenant: "mfs", wd: "wd1", site: "MFS-Careers" }
+  - { name: "TJX", ats: workday, tenant: "tjx", wd: "wd1", site: "TJX_External", tags: [fortune500] }
+  - { name: "Staples", ats: phenom, base_url: "https://careers.staples.com" }
+  # Upgraded from phenom to the real Workday board (2026-08-16; verified).
+  - { name: "BJ's Wholesale", ats: workday, tenant: "bjswholesaleclub", wd: "wd1", site: "BJsCareers", tags: [fortune500] }
+  - { name: "Mass General Brigham", ats: workday, tenant: "massgeneralbrigham", wd: "wd1", site: "MGBExternal" }
+  - { name: "Boston Scientific", ats: company_site, careers_url: "https://jobs.bostonscientific.com", tags: [fortune500] }
+  - { name: "Vertex Pharmaceuticals", ats: workday, tenant: "vrtx", wd: "wd501", site: "vertex_careers", tags: [fortune500] }
+  - { name: "Bose", ats: smartrecruiters, token: "BoseCorporation" }
+  - { name: "Dunkin' (Inspire Brands)", ats: company_site, careers_url: "https://careers.inspirebrands.com" }
+  - { name: "New Balance", ats: company_site, careers_url: "https://jobs.newbalance.com" }
+  - { name: "Emerson College", ats: workday, tenant: "emerson", wd: "wd5", site: "Emerson_College_Staff" }
+  - { name: "Tufts Medical Center", ats: workday, tenant: "tuftsmedicine", wd: "wd1", site: "Jobs" }
+  - { name: "HarbourVest", ats: workday, tenant: "harbourvest", wd: "wd5", site: "HVP" }
+  - { name: "Bain Capital", ats: workday, tenant: "baincapital", wd: "wd1", site: "External_Public" }
+  - { name: "Forrester", ats: workday, tenant: "forrester", wd: "wd501", site: "careers" }
+  - { name: "Haemonetics", ats: workday, tenant: "haemonetics", wd: "wd5", site: "HAE" }
+  # From the 2026-08-13 direct-link analysis (companies whose relevant postings
+  # were reaching us only as unverified LinkedIn copies):
+  - { name: "Eversource", ats: workday, tenant: "eversource", wd: "wd1", site: "ExternalSite" }
+  - { name: "Harvard University", ats: smartrecruiters, token: "HarvardUniversity" }
+  - { name: "The Brattle Group", ats: greenhouse, token: "thebrattlegroup" }
+  - { name: "ClearView Healthcare Partners", ats: greenhouse, token: "clearviewhealthcarepartners" }
+  - { name: "Brown Brothers Harriman", ats: workday, tenant: "bbh", wd: "wd5", site: "BBH" }
+  - { name: "Biogen", ats: workday, tenant: "biibhr", wd: "wd3", site: "external" }
+  - { name: "UMass Memorial Health", ats: workday, tenant: "ummh", wd: "wd1", site: "Careers" }
+  - { name: "Worcester Polytechnic Institute", ats: workday, tenant: "wpi", wd: "wd5", site: "WPI_External_Career_Site" }
+  - { name: "Watts Water Technologies", ats: workday, tenant: "wattswater", wd: "wd5", site: "External" }
+  - { name: "The Hilb Group", ats: workday, tenant: "hilbgroup", wd: "wd5", site: "HG-Careers" }
+  - { name: "C&W Services", ats: workday, tenant: "cw", wd: "wd1", site: "External" }
+  - { name: "Avangrid", ats: workday, tenant: "iberdrola", wd: "wd3", site: "Iberdrola" }
+  - { name: "Ocean Spray", ats: workday, tenant: "oceanspray", wd: "wd5", site: "OceanSprayJobs" }
+  - { name: "Goodwin Procter", ats: workday, tenant: "goodwinprocter", wd: "wd5", site: "External_Careers" }
+  - { name: "Talbots (Knitwell Group)", ats: workday, tenant: "knitwellgroup", wd: "wd1", site: "US_Corporate_Jobs" }

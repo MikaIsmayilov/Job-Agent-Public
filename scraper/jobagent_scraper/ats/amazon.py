@@ -1,7 +1,7 @@
 """Amazon's first-party job board: amazon.jobs public search JSON.
 
 GET https://www.amazon.jobs/en/search.json?base_query=<term>&result_limit=50
-Searches every configured term, keeps US postings, and builds the description
+Searches every configured term, keeps postings in the searched country (config.yml search.country), and builds the description
 from the summary + basic + preferred qualifications so the fit scorer and the
 years-of-experience filter see the real requirements.
 """
@@ -11,6 +11,7 @@ from __future__ import annotations
 from datetime import datetime
 
 from ..common import Company, get_json, html_to_text, make_posting, to_structured
+from ..country import country
 
 BASE = "https://www.amazon.jobs"
 
@@ -24,6 +25,7 @@ def _posted_date(value: str) -> str | None:
 
 def fetch(sess, company: Company, cfg: dict) -> list[dict]:
     limit = cfg["ats"]["per_company_limit"]
+    code = country(cfg)["amazon_code"]
     seen: set[str] = set()
     postings: list[dict] = []
 
@@ -34,7 +36,7 @@ def fetch(sess, company: Company, cfg: dict) -> list[dict]:
             data = get_json(
                 sess,
                 f"{BASE}/en/search.json",
-                params={"base_query": term, "result_limit": 50, "offset": 0, "normalized_country_code[]": "USA"},
+                params={"base_query": term, "result_limit": 50, "offset": 0, "normalized_country_code[]": code},
             )
         except Exception:
             continue
@@ -43,8 +45,8 @@ def fetch(sess, company: Company, cfg: dict) -> list[dict]:
             if not path or path in seen:
                 continue
             seen.add(path)
-            country = (job.get("country_code") or job.get("normalized_country_code") or "").upper()
-            if country and country not in ("USA", "US"):
+            job_country = (job.get("country_code") or job.get("normalized_country_code") or "").upper()
+            if job_country and job_country not in (code, code[:2]):
                 continue
             title = job.get("title", "")
             description = html_to_text(

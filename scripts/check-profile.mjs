@@ -5,6 +5,7 @@
 //
 // Usage: node scripts/check-profile.mjs
 
+import { readFileSync } from "node:fs";
 import resume from "../data/resume.json" with { type: "json" };
 import { buildRules, evaluateResumeFit } from "../lib/matching.ts";
 import { needsOnboarding, PROFILE } from "../lib/profile.ts";
@@ -60,9 +61,12 @@ for (const family of PROFILE.roleFamilies) {
   }
 }
 if (PROFILE.workAuthorization.status === "unset") warnings.push("workAuthorization.status is unset: eligibility checks are off.");
+// The scraper reads its country from config.yml; eligibility reads it from the profile. They must agree.
+const scraperCountry = (readFileSync(new URL("../scraper/config.yml", import.meta.url), "utf8").match(/^\s+country:\s*["']?(\w+)/m)?.[1] ?? "US").toUpperCase();
+if (scraperCountry !== PROFILE.country) errors.push(`data/profile.json country is ${PROFILE.country} but scraper/config.yml search.country is ${scraperCountry}: set both to the country you are searching.`);
 if (PROFILE.places.length === 0) warnings.push("No places: every location counts as a match.");
 
-console.log(`Profile: ${PROFILE.displayName || "(none)"} · ${PROFILE.seniority} level · ${PROFILE.workAuthorization.status}`);
+console.log(`Profile: ${PROFILE.displayName || "(none)"} · ${PROFILE.country} · ${PROFILE.seniority} level · ${PROFILE.workAuthorization.status}`);
 console.log(`Places: ${PROFILE.places.map((place) => place.label).join(", ") || "anywhere"}${PROFILE.remoteOk ? " + remote" : ""}`);
 console.log(`Resume: ${bulletIds.size} bullets, ${rules.evidence.length} skills, ${rules.gaps.length} gap rules\n`);
 for (const family of PROFILE.roleFamilies) {

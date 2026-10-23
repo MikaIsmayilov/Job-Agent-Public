@@ -17,6 +17,7 @@ Speed up applying by pre-filling ATS application forms with grounded resume data
    - "Will you require sponsorship **in the future**?" and the combined "**now or in the future**" phrasing → `requires_future_sponsorship`.
    - "Do you require sponsorship **now** / to work for X?" (the "now" half of a two-question pair) → `requires_current_sponsorship`.
    - "Are you authorized to work in the US?" → `authorized_to_work_us`.
+   - "Are you legally entitled / eligible to work in Canada?" → `authorized_to_work_canada`. "Do you require an LMIA / employer sponsorship?" follows the same now / future split as above. A permit-expiry question → `work_permit_expiry`.
    - Questions that define their own terms ("including OPT/STEM OPT support", "without employer support of any kind") must be answered against that definition. If the bank has no answer that fits the exact definition, STOP and ask; record the user's answer in `data/answers.yml` with the date so the next form reuses it.
    **If any needed value is missing or marked `UNCONFIRMED`, STOP and ask the user for that specific fact.** Leave the field blank and flag it rather than guessing. Misrepresenting work authorization on an application is never acceptable, even when the truthful answer filters the candidate out, and an educated guess here is misrepresentation.
    Use `name_on_forms.legal_name` for legal/full-name fields and `preferred_name` where a form asks for a preferred or display name.

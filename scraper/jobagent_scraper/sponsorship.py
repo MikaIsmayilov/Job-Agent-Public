@@ -5,6 +5,10 @@ Used only as a fallback when a posting doesn't state its own policy. Sources:
 2. h1bdata.info — public DOL LCA disclosure data; a company with recent H-1B
    filings is marked "likely" (history, not a promise). Results are cached for
    30 days in scraper/out/sponsorship-cache.json; lookups per run are capped.
+
+Both sources describe US (H-1B) sponsorship, so annotation is skipped when
+config.yml searches another country: a US filing history says nothing about
+a Canadian work permit.
 """
 
 from __future__ import annotations
@@ -16,6 +20,7 @@ import time
 import yaml
 
 from .common import OUT_DIR, REPO_DIR, REQUEST_TIMEOUT
+from .country import country_code
 
 CACHE_PATH = OUT_DIR / "sponsorship-cache.json"
 CURATED_PATH = REPO_DIR / "data" / "sponsorship.yml"
@@ -130,8 +135,10 @@ def company_stance(sess, company_name: str) -> tuple[str | None, str | None]:
     return stance, note
 
 
-def annotate_postings(sess, postings: list[dict], company_name: str | None = None) -> None:
-    """Attach sponsorship_hint/_note to postings lacking them (in place)."""
+def annotate_postings(sess, postings: list[dict], company_name: str | None = None, cfg: dict | None = None) -> None:
+    """Attach sponsorship_hint/_note to postings lacking them (in place). US searches only."""
+    if cfg is not None and country_code(cfg) != "US":
+        return
     for posting in postings:
         if posting.get("sponsorship_hint"):
             continue

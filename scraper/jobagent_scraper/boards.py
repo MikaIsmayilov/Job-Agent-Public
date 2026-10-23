@@ -1,8 +1,14 @@
-"""Job-board scraping via python-jobspy (LinkedIn, Indeed, ZipRecruiter, Google, Glassdoor)."""
+"""Job-board scraping via python-jobspy (LinkedIn, Indeed, ZipRecruiter, Google, Glassdoor).
+
+Indeed and Glassdoor search the country in config.yml `search.country`
+(indeed.ca / glassdoor.ca for Canada); LinkedIn and Google follow the location strings.
+"""
 
 from __future__ import annotations
 
 import math
+
+from .country import country
 
 
 def fetch_board_jobs(cfg: dict, limit: int | None = None) -> tuple[list[dict], list[str]]:
@@ -11,6 +17,7 @@ def fetch_board_jobs(cfg: dict, limit: int | None = None) -> tuple[list[dict], l
 
     search = cfg["search"]
     boards = cfg["boards"]
+    home = country(cfg)
     errors: list[str] = []
     rows: list[dict] = []
 
@@ -26,7 +33,7 @@ def fetch_board_jobs(cfg: dict, limit: int | None = None) -> tuple[list[dict], l
     ]
     if search.get("remote_ok"):
         passes.extend(
-            {"location": search.get("remote_location", "United States"), "is_remote": True, "job_type": job_type}
+            {"location": search.get("remote_location") or home["remote_location"], "is_remote": True, "job_type": job_type}
             for job_type in job_types
         )
 
@@ -43,7 +50,7 @@ def fetch_board_jobs(cfg: dict, limit: int | None = None) -> tuple[list[dict], l
                     results_wanted=search["results_wanted_per_term"],
                     hours_old=search["hours_old"],
                     job_type=search_pass["job_type"],
-                    country_indeed=boards.get("country_indeed", "USA"),
+                    country_indeed=boards.get("country_indeed") or home["indeed"],
                     linkedin_fetch_description=boards.get("linkedin_fetch_description", True),
                     enforce_annual_salary=boards.get("enforce_annual_salary", True),
                     proxies=boards.get("proxies") or None,

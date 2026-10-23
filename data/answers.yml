@@ -10,8 +10,10 @@
 
 work_authorization:
   # Mirror of data/profile.json workAuthorization.status, in form language.
-  status_summary: "UNCONFIRMED"            # e.g. "U.S. citizen", "Green card holder", "F-1 STEM OPT", "Requires H-1B sponsorship"
+  status_summary: "UNCONFIRMED"            # e.g. "U.S. citizen", "Green card holder", "F-1 STEM OPT", "Canadian permanent resident", "PGWP holder"
   authorized_to_work_us: "UNCONFIRMED"     # Yes / No: authorized to work in the US right now
+  authorized_to_work_canada: "UNCONFIRMED" # Yes / No: legally entitled to work in Canada right now
+  work_permit_expiry: ""                   # Canadian open work permit (PGWP etc.) expiry, YYYY-MM-DD; blank otherwise
   requires_current_sponsorship: "UNCONFIRMED"   # Yes / No
   requires_future_sponsorship: "UNCONFIRMED"    # Yes / No: will you ever need an employer to sponsor a visa
   visa_type: "UNCONFIRMED"                 # "None" for citizens and green card holders
@@ -32,7 +34,7 @@ preferences:
   salary_expectation: "Open, aligned with the posted range and market rate for the role"
   # A number for forms that demand one. Check the dashboard's Salary benchmark
   # panel (profile card) once a few hundred postings are in.
-  salary_number_usd: "UNCONFIRMED"
+  salary_number_usd: "UNCONFIRMED"      # in the searched country's currency (CAD for Canada) despite the key name
 
 education_details:
   gpa_overall: ""          # leave blank to never enter a GPA
@@ -60,6 +62,9 @@ eeo_defaults:
   race_ethnicity: ""
   hispanic_or_latino: ""
   veteran_status: ""
+  # Canadian employment-equity self-identification (Employment Equity Act groups).
+  indigenous_identity: ""
+  visible_minority: ""
 
 never_fill:
   # The fill skill leaves these blank and flags them, regardless of what a form says:

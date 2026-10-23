@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import re
 
+from .country import country
+
 _RANGE_RE = re.compile(r"(\d{1,2})\s*[-–—]\s*\d{1,2}\s*\+?\s*(?:years?|yrs?)", re.IGNORECASE)
 _PLUS_RE = re.compile(r"(\d{1,2})\s*\+?\s*(?:years?|yrs?)", re.IGNORECASE)
 _EXPERIENCE_WINDOW = 60
@@ -118,25 +120,61 @@ def is_relevant(title: str, cfg: dict) -> bool:
     return any(keyword.lower() in lower for keyword in cfg["relevance"]["title_keywords"])
 
 
-_US_STATES = {
-    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY",
-    "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND",
-    "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "DC", "PR",
-}
 _REGION_CODE_RE = re.compile(r",\s*([A-Z]{2})\b")
 
 
+def _exclude_markers(cfg: dict) -> list[str]:
+    """Config markers plus the searched country's neighbour markers."""
+    return list(cfg.get("location", {}).get("exclude_markers", [])) + country(cfg)["foreign_markers"]
+
+
+def _has_word(text: str, markers: list[str]) -> bool:
+    # Whole words: "usa" must not match "Usak", "India" not "Indianapolis",
+    # "Maine" not the French "domaine".
+    lower = text.lower()
+    return any(re.search(rf"(?<![a-zà-ÿ]){re.escape(marker.lower())}(?![a-zà-ÿ])", lower) for marker in markers)
+
+
+def _names_home(text: str, cfg: dict) -> bool:
+    return _has_word(text, country(cfg)["home_markers"])
+
+
 def is_acceptable_location(location: str, cfg: dict) -> bool:
-    """Drop clearly-foreign postings; keep US and ambiguous ones (drop-only heuristic)."""
+    """Drop clearly-foreign postings; keep home-country and ambiguous ones (drop-only heuristic).
+
+    The home country is config.yml `search.country` (US or CA, see country.py).
+    A location naming the home country is always kept, so multi-country
+    listings ("Toronto, ON or New York, NY") survive either search.
+    """
     if not location:
         return True
-    # "City, XX" with a non-US region code (e.g. "Mississauga, ON") is foreign.
+    if _names_home(location, cfg):
+        return True
+    # "City, XX" with a foreign region code (e.g. "Mississauga, ON" in a US
+    # search, "Austin, TX" in a Canadian one) is foreign.
     codes = _REGION_CODE_RE.findall(location)
-    if codes and not any(code in _US_STATES for code in codes):
+    home_codes = country(cfg)["region_codes"]
+    if codes and not any(code in home_codes for code in codes):
         return False
-    markers = cfg.get("location", {}).get("exclude_markers", [])
-    lower = location.lower()
-    return not any(marker.lower() in lower for marker in markers)
+    # Every code a home state/province: keep even when the city shares a
+    # marker's name ("London, ON" in a Canadian search, "Paris, TX").
+    if codes and all(code in home_codes for code in codes):
+        return True
+    words = country(cfg)["foreign_words"]
+    if words and re.search(words, location):
+        return False
+    return not _has_word(location, _exclude_markers(cfg))
+
+
+def is_foreign_title(title: str, cfg: dict) -> bool:
+    """Global companies often put the country in the title ("PM, Australia").
+
+    Markers only: the region-code rule would false-positive on titles like
+    "Analyst, IT".
+    """
+    if _names_home(title, cfg):
+        return False
+    return _has_word(title, _exclude_markers(cfg))
 
 
 def apply_filters(postings: list[dict], cfg: dict) -> tuple[list[dict], dict]:
@@ -152,11 +190,7 @@ def apply_filters(postings: list[dict], cfg: dict) -> tuple[list[dict], dict]:
         if not is_acceptable_location(posting.get("location", ""), cfg):
             dropped["foreign_location"] += 1
             continue
-        # Global companies often put the country in the title ("PM, Australia")
-        # while the location field carries an unlisted city. Markers only here —
-        # the region-code rule would false-positive on titles like "Analyst, IT".
-        markers = cfg.get("location", {}).get("exclude_markers", [])
-        if any(marker.lower() in title.lower() for marker in markers):
+        if is_foreign_title(title, cfg):
             dropped["foreign_location"] += 1
             continue
         if not is_entry_level(title, description, cfg):

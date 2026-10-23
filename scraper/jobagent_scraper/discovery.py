@@ -101,14 +101,16 @@ def _identity(entry: dict) -> str:
 
 
 def _known_identities(companies_path: Path | None = None) -> set[str]:
-    path = companies_path or SCRAPER_DIR / "companies.yml"
-    if not path.exists():
-        return set()
-    data = yaml.safe_load(path.read_text()) or {}
+    # Regional packs count as known too, so discovery never re-proposes them.
+    paths = [companies_path] if companies_path else [SCRAPER_DIR / "companies.yml", *sorted((SCRAPER_DIR / "companies").glob("*.yml"))]
     identities = set()
-    for entry in data.get("companies", []):
-        if entry.get("ats") == "workday":
-            identities.add(f"workday:{entry.get('tenant', '')}")
-        else:
-            identities.add(f"{entry.get('ats', '')}:{entry.get('token', '')}")
+    for path in paths:
+        if not path.exists():
+            continue
+        data = yaml.safe_load(path.read_text()) or {}
+        for entry in data.get("companies", []):
+            if entry.get("ats") == "workday":
+                identities.add(f"workday:{entry.get('tenant', '')}")
+            else:
+                identities.add(f"{entry.get('ats', '')}:{entry.get('token', '')}")
     return identities

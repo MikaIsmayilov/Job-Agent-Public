@@ -174,6 +174,10 @@ const NEGATIVE_SPONSORSHIP: RegExp[] = [
   /u\.?s\.? citizens? (?:or (?:lawful )?permanent residents? )?only/,
   /citizenship (?:is )?required/,
   /must be an? (?:u\.?s\.?|united states) citizen/,
+  /canadian citizens? (?:or (?:an? )?permanent residents? )?only/,
+  /must be an? canadian citizen/,
+  // Canada: employer sponsorship is an LMIA (Labour Market Impact Assessment).
+  /no lmia|lmia (?:support |sponsorship )?(?:is )?not (?:available|offered|provided|supported)|(?:unable to|can ?not|will not|not (?:able|willing) to|do(?:es)? not) (?:provide |offer |support )(?:an? )?lmia/,
 ];
 
 const POSITIVE_SPONSORSHIP: RegExp[] = [
@@ -183,6 +187,7 @@ const POSITIVE_SPONSORSHIP: RegExp[] = [
   /h-?1b (?:visa )?sponsorship/,
   /open to (?:visa )?sponsorship/,
   /we sponsor/,
+  /lmia (?:support |sponsorship )?(?:is )?(?:available|offered|provided)|(?:will|can) (?:provide |offer |support )(?:an? )?lmia|lmia[- ]approved/,
 ];
 
 const RED_FLAG_RULES: Array<{ label: string; pattern: RegExp }> = [

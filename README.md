@@ -33,9 +33,9 @@ You don't need to know how to code. You set it up by chatting with Claude.
 
 | Feature | What you get |
 |---|---|
-| **Finds jobs** | Searches LinkedIn, Indeed and Google Jobs, plus 130+ company career sites (Greenhouse, Lever, Workday and others), every day. |
+| **Finds jobs** | Searches LinkedIn, Indeed and Google Jobs in the United States or Canada, plus about 90 national company career sites (Greenhouse, Lever, Workday and others) and optional regional packs, every day. |
 | **Scores every job** | A fit score from 35 to 95 based on your skills, which of the job's requirements your resume covers, and the seniority you want. Each job shows the skills it matched and what you're missing. |
-| **Filters out the junk** | "Worth applying" shows only fresh jobs in your cities (or remote), at your level, that you're legally able to take. Postings that need U.S. citizenship, or that don't sponsor visas when you need one, are flagged. |
+| **Filters out the junk** | "Worth applying" shows only fresh jobs in your cities (or remote), at your level, that you're legally able to take. Postings that need citizenship (or Canadian PR) you don't have, or that don't sponsor when you need it, are flagged. |
 | **Tailors your resume** | A one-page DOCX and PDF for a specific job. Every line traces back to your real resume, and Claude checks that nothing was invented. |
 | **Writes cover letters** | 260 to 340 words, specific to the job and grounded in your experience. |
 | **Preps your queue** | `/prep-queue` picks the best new jobs and tailors resumes for all of them, ready for you to review in the morning. |
@@ -110,9 +110,12 @@ Claude walks you through everything. Here is what to expect:
    - the roles you're targeting (for example "data analyst, business analyst")
    - your level: entry (0 to 2 years), mid (3 to 5) or senior (6+)
    - full-time, internship, part-time or contract
-   - the cities you want, whether remote counts, and whether you'd relocate
-   - your **work authorization**: U.S. citizen, green card, F-1 OPT/STEM OPT,
-     or needing visa sponsorship
+   - the country you're searching (United States or Canada), the cities you
+     want, whether remote counts, and whether you'd relocate
+   - your **work authorization** there: in the U.S., citizen, green card,
+     F-1 OPT/STEM OPT or needing visa sponsorship; in Canada, citizen,
+     permanent resident, open work permit (such as a PGWP) or needing an
+     employer-supported permit (LMIA)
    - a salary number for forms that insist on one (you can skip this)
    - companies you especially want (optional)
 4. **Form answers.** Your legal name and similar details for applications.
@@ -351,13 +354,20 @@ Only your Claude subscription. Everything else is free, unless you choose the
 optional Cloudflare deployment.
 
 **Does it work outside the U.S.?**
-It's built around U.S. job boards and U.S. work authorization. Other countries
-can work with changes to `scraper/config.yml`; ask Claude.
+Yes, in Canada. Onboarding asks which country you're searching. For Canada it
+searches Indeed Canada (and Glassdoor Canada if you turn it on), LinkedIn and
+Google Jobs with Canadian locations, adds a pack of Canadian employers'
+career sites, treats provinces as home and U.S.-only postings as foreign, and
+checks eligibility against Canadian rules (citizen, permanent resident, open
+work permit, or needing an LMIA). One country per setup. Other countries are
+not supported yet.
 
 **Does it work for any field, or only analytics?**
 Any field. Your role types, skills and search terms all come from your
-onboarding. The included company list leans toward Boston, so add companies
-for your own field and city.
+onboarding. The included company list is national; city and country packs
+(`scraper/companies/`, today Boston and Canada) switch on from your places.
+Name the companies you want during onboarding, and `pnpm scrape:discover`
+proposes more from what the job boards return.
 
 **Will it apply to jobs on its own?**
 No. Claude prepares and fills in; you submit. (Codex can submit only if you

@@ -12,6 +12,7 @@ import html
 import json
 import os
 import re
+import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -63,14 +64,31 @@ def load_config(path: Path | None = None) -> dict:
         return yaml.safe_load(fh)
 
 
-def load_companies(path: Path | None = None) -> list[Company]:
-    with open(path or SCRAPER_DIR / "companies.yml", encoding="utf-8") as fh:
-        data = yaml.safe_load(fh) or {}
+def load_companies(path: Path | None = None, regions: list[str] | None = None) -> list[Company]:
+    """companies.yml plus each opt-in regional pack scraper/companies/<region>.yml.
+
+    Packs are listed in config.yml `ats.regions` (e.g. ["canada"]); /onboard
+    picks them from the user's places. A company in both files is loaded once.
+    """
+    paths = [path or SCRAPER_DIR / "companies.yml"]
+    for region in regions or []:
+        pack = SCRAPER_DIR / "companies" / f"{region}.yml"
+        if pack.exists():
+            paths.append(pack)
+        else:
+            print(f"[ats] regional company pack '{region}' not found at {pack}, skipping", file=sys.stderr)
     companies = []
-    for entry in data.get("companies", []):
-        known = {k: entry[k] for k in ("name", "ats", "token", "tenant", "wd", "site", "base_url", "careers_url", "tags") if k in entry}
-        extra = {k: v for k, v in entry.items() if k not in known}
-        companies.append(Company(**known, extra=extra))
+    seen: set[str] = set()
+    for source in paths:
+        with open(source, encoding="utf-8") as fh:
+            data = yaml.safe_load(fh) or {}
+        for entry in data.get("companies", []):
+            known = {k: entry[k] for k in ("name", "ats", "token", "tenant", "wd", "site", "base_url", "careers_url", "tags") if k in entry}
+            extra = {k: v for k, v in entry.items() if k not in known}
+            if known.get("name", "").lower() in seen:
+                continue
+            seen.add(known.get("name", "").lower())
+            companies.append(Company(**known, extra=extra))
     return companies
 
 

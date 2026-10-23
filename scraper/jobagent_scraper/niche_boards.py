@@ -51,7 +51,8 @@ def fetch_remotive(sess, cfg: dict) -> list[dict]:
     """Remotive public API — remote-only jobs, often with salary text."""
     postings = []
     seen: set[str] = set()
-    for term in ["data analyst", "business analyst", "product analyst"]:
+    # Remotive ignores `search` today, but the user's own terms cost nothing if it starts honouring it.
+    for term in ((cfg.get("search") or {}).get("terms") or [""])[:3]:
         data = get_json(sess, "https://remotive.com/api/remote-jobs", params={"search": term, "limit": 50})
         for job in data.get("jobs", []):
             url = job.get("url", "")

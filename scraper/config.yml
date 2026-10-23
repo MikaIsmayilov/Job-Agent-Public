@@ -7,10 +7,15 @@ server:
   # Token is read from the INGEST_TOKEN env var, falling back to ../.env
 
 search:
-  # /onboard fills locations, job_types and terms from your targets.
-  distance_miles: 50
-  locations: []                      # e.g. ["Boston, MA", "New York, NY"]
-  remote_location: "United States"   # second pass with is_remote=true
+  # /onboard fills country, locations, job_types and terms from your targets.
+  # country: US or CA. It picks the Indeed/Glassdoor domain, the remote search
+  # location, which region codes count as home (states or provinces) and which
+  # locations are foreign (scraper/jobagent_scraper/country.py). Set the same
+  # country in data/profile.json so eligibility checks use its rules.
+  country: US
+  distance_miles: 50                 # jobspy always measures in miles (50 mi is about 80 km)
+  locations: []                      # e.g. ["Chicago, IL", "Austin, TX"] or ["Toronto, ON", "Vancouver, BC"]
+  # remote_location: "United States" # optional override; defaults to the country name
   remote_ok: true
   hours_old: 72                      # only postings from the last N hours (boards)
   results_wanted_per_term: 20
@@ -25,7 +30,7 @@ boards:
   # since at least 2026-10-14, adding ~40 minutes of retries per run for zero jobs.
   sites: ["indeed", "linkedin", "google"]
   linkedin_fetch_description: true
-  country_indeed: "USA"
+  # country_indeed: "USA"          # optional override; defaults from search.country (USA / Canada)
   enforce_annual_salary: true    # normalize hourly/monthly pay to annual figures
   # proxies: ["user:pass@host:port"]   # enable if LinkedIn 429s become frequent
 
@@ -34,6 +39,9 @@ ats:
   # (workday, phenom). JSON-board connectors fetch everything and rely on the
   # relevance/entry-level filters below.
   per_company_limit: 60
+  # Opt-in regional company packs in scraper/companies/<name>.yml, scraped on
+  # top of companies.yml. Shipped: "boston", "canada". /onboard sets this.
+  regions: []
   detail_fetch_limit: 25             # max per-posting detail fetches (smartrecruiters/workday/phenom)
 
 entry_level:
@@ -48,14 +56,13 @@ entry_level:
 
 location:
   # Drop-only heuristic: postings whose location contains any marker are
-  # discarded; US and ambiguous locations are kept.
+  # discarded; home-country and ambiguous locations are kept. These markers
+  # are foreign for both US and Canadian searches. Neighbour markers (Canada
+  # for a US search, "United States" for a Canadian one) are added from
+  # scraper/jobagent_scraper/country.py, so do not list them here.
   exclude_markers:
     - "United Kingdom"
     - "London"
-    - "Canada"
-    - "Ontario"
-    - "Toronto"
-    - "Vancouver"
     - "India"
     - "Ireland"
     # Santander global Workday feed leaks (no country/region code on these):
@@ -88,11 +95,18 @@ location:
     - "Turkey"
     - "Istanbul"
     - "EMEA"
+    - "Europe"
+    - "Middle East"
+    - "LATAM"
+    - "Latin America"
     - "APAC"
     - "Redhill"
     - "Milton Keynes"
     - "Makati"
     - "Manila"
+    - "Quezon"
+    - "Phnom Penh"
+    - "Cambodia"
     - "Philippines"
     - "Jakarta"
     - "Indonesia"
@@ -119,6 +133,7 @@ location:
     - "Belgium"
     - "Portugal"
     - "Czech"
+    - "Czechia"
     - "Romania"
     - "Hungary"
     - "Argentina"

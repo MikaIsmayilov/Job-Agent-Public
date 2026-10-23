@@ -1,0 +1,37 @@
+# Regional company pack: Canada. Loaded only when config.yml `ats.regions`
+# includes "canada". Same fields as scraper/companies.yml.
+#
+# Every board was verified against its public API on 2026-10-22 and had live
+# Canadian postings that day. Big banks, insurers and telcos (RBC, TD, BMO,
+# CIBC, Scotiabank, Sun Life, Telus, Rogers, Bell) run Workday or SuccessFactors
+# sites whose tenant names cannot be guessed reliably; their postings arrive
+# through the LinkedIn / Indeed Canada scrape, and `pnpm scrape:discover`
+# proposes their direct boards once a posting links to one. Manulife's
+# Workday board is in the core list and carries Toronto roles.
+
+companies:
+  # ---- Fintech ----
+  - { name: "Wealthsimple", ats: ashby, token: "wealthsimple", tags: [startup] }
+  - { name: "KOHO", ats: ashby, token: "koho", tags: [startup] }
+  - { name: "Neo Financial", ats: ashby, token: "neofinancial", tags: [startup] }
+  - { name: "Float", ats: ashby, token: "float", tags: [startup] }
+  - { name: "Procurify", ats: ashby, token: "procurify", tags: [startup] }
+
+  # ---- Software / SaaS ----
+  - { name: "Lightspeed Commerce", ats: ashby, token: "lightspeedhq" }
+  - { name: "1Password", ats: ashby, token: "1password" }
+  - { name: "Jobber", ats: ashby, token: "jobber" }
+  - { name: "Benevity", ats: ashby, token: "benevity" }
+  - { name: "Loopio", ats: ashby, token: "loopio", tags: [startup] }
+  - { name: "Visier", ats: ashby, token: "visier" }
+  - { name: "Thinkific", ats: ashby, token: "thinkific" }
+  - { name: "Achievers", ats: lever, token: "achievers" }
+  - { name: "PointClickCare", ats: lever, token: "pointclickcare" }
+  - { name: "D2L", ats: greenhouse, token: "d2l" }
+  - { name: "Geotab", ats: greenhouse, token: "geotab" }
+  - { name: "Faire", ats: greenhouse, token: "faire" }
+  - { name: "Wattpad", ats: lever, token: "wattpad" }
+
+  # ---- AI ----
+  - { name: "Cohere", ats: ashby, token: "cohere" }
+  - { name: "Waabi", ats: lever, token: "waabi", tags: [startup] }

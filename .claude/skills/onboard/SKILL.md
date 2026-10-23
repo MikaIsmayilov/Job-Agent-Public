@@ -130,15 +130,32 @@ Ask, in batches:
    pick.
 2. **Seniority**: entry (0 to 2 years), mid (3 to 5), senior (6+).
 3. **Job types**: full-time, internship, part-time, contract. Earliest start date.
-4. **Places**: cities or regions (one or more), whether remote counts, and
-   whether they would relocate. The scraper and boards are US-focused; if they
-   are searching outside the US, say so and adjust `country_indeed` and
-   `exclude_markers` in `scraper/config.yml` together.
-5. **Work authorization** (ask directly, with these options):
-   - U.S. citizen → `citizen`
-   - Green card / permanent resident → `permanent_resident`
-   - F-1 student on OPT or STEM OPT (no sponsorship needed now) → `opt`
-   - Needs visa sponsorship now (H-1B or other) → `needs_sponsorship`
+4. **Country and places**: which country they are searching, the **United
+   States (`US`)** or **Canada (`CA`)**, then cities or regions (one or more),
+   whether remote counts, and whether they would relocate. One country per
+   setup: the country decides the Indeed/Glassdoor domain, which locations
+   count as foreign and which work-authorization rules apply. Anyone searching
+   both countries picks the one they are authorized in, or the one they want
+   most; say plainly that the other country's postings will be filtered out.
+   Other countries are not supported yet: say so rather than improvising.
+   For Canada also ask whether they work in French. If yes, add French title
+   variants to `relevance.title_keywords` and `search.terms` (e.g. "analyste")
+   and to the role families' `titlePattern`; if no, Quebec postings that are
+   French-only will mostly be filtered out, which is what they want.
+5. **Work authorization** in that country (ask directly, with these options):
+   - United States:
+     - U.S. citizen → `citizen`
+     - Green card / permanent resident → `permanent_resident`
+     - F-1 student on OPT or STEM OPT (no sponsorship needed now) → `opt`
+     - Needs visa sponsorship now (H-1B or other) → `needs_sponsorship`
+   - Canada:
+     - Canadian citizen → `citizen`
+     - Permanent resident → `permanent_resident`
+     - Open work permit, such as a PGWP or spousal open work permit (no
+       employer support needed now) → `open_work_permit`; also ask its expiry
+       date for `data/answers.yml`
+     - Needs an employer-supported permit now (LMIA-based or employer-specific
+       work permit) → `needs_sponsorship`
    Then: do they hold an active security clearance? Will they need sponsorship
    in the future? Country of citizenship (forms ask)? Their own one-sentence
    explanation for forms that want one.
@@ -146,7 +163,10 @@ Ask, in batches:
    (stays `UNCONFIRMED`; the dashboard's Salary benchmark panel helps once
    postings are in).
 7. **Target companies** (optional): names they especially want. Check
-   `scraper/companies.yml` (a starter list, Boston-weighted). For each missing
+   `scraper/companies.yml` (the core list: employers hiring across the US or
+   remotely) and the regional packs in `scraper/companies/` (`boston.yml`,
+   `canada.yml`). Turn on every pack that matches their places in
+   `ats.regions` (step 7). For each missing
    company, find its applicant tracking system from the careers page
    (boards.greenhouse.io/<token>, jobs.lever.co/<token>, jobs.ashbyhq.com/<token>,
    <tenant>.wd<N>.myworkdayjobs.com/<site>, and so on), add an entry shaped
@@ -161,11 +181,16 @@ Keep the template's shape (see `lib/profile.ts` for every field and
 `tests/fixtures/sample-profile.json` for a filled, tested example):
 
 - `displayName` (resume name), `initials`, `device`, `seniority`, `remoteOk`.
-- `places`: `[{label: "Boston, MA", match: ["boston", "cambridge, ma"]}]`.
+- `country`: `"US"` or `"CA"` from step 4. It must match `search.country` in
+  `scraper/config.yml`.
+- `places`: `[{label: "Chicago, IL", match: ["chicago", "evanston, il"]}]`, or
+  for Canada `[{label: "Toronto, ON", match: ["toronto", "mississauga", "markham"]}]`.
   `match` strings are lowercase substrings of a posting's location field; use
-  the city name plus ", <state code>" forms that cannot collide with other
-  places (a state as `", ma"` also matches Madrid in a ", madrid" string, so
-  prefer the full state name plus the city list when that matters).
+  the city name plus ", <state or province code>" forms that cannot collide
+  with other places (a code like `", ma"` also matches Madrid in a ", madrid"
+  string, and `", ca"` matches both California and Canada, so prefer the full
+  state or province name plus the city list when that matters). Include the
+  suburbs people actually commute from: board postings name them.
 - `workAuthorization`: `{status, holdsClearance}` from step 4.
 - `roleFamilies`: one per target role group, **ordered specific first,
   generic last** (the first match wins). Each:
@@ -192,7 +217,11 @@ Remember JSON escaping: a regex `\b` is written `\\b` in JSON.
 
 ### 6. Write `data/answers.yml`
 
-Fill the template from the interview and the resume. Rules: legal and
+Fill the template from the interview and the resume. For a Canadian search
+fill `authorized_to_work_canada` (and `work_permit_expiry` for an open work
+permit) and leave `authorized_to_work_us` as `UNCONFIRMED` unless they told you;
+`eeo_defaults` also covers Canadian employment-equity self-identification.
+Rules: legal and
 eligibility keys are only what the user said, else `UNCONFIRMED`; EEO keys
 blank unless they chose to answer; `employment_history_authority.complete_record`
 stays true only if they confirm the resume lists every employer they have had.
@@ -207,13 +236,19 @@ user instructions", dated.
 
 Change only these keys, keeping comments:
 
-- `search.locations`: the places as board search strings ("Boston, MA").
+- `search.country`: `US` or `CA`, the same as `country` in the profile.
+- `search.locations`: the places as board search strings ("Chicago, IL",
+  "Toronto, ON").
   `search.remote_ok`: as answered. `search.job_types`: their job types.
 - `search.terms`: 8 to 20 board search phrases covering each role family's
   common titles. More terms means slower runs and more rate limiting.
 - `relevance.title_keywords`: lowercase substrings that every relevant title
   contains (e.g. "analyst", "analytics", "data scientist"). Too narrow drops
   good jobs; too broad floods the inbox.
+- `ats.regions`: the regional company packs (target companies question, step 4) that match their
+  places (`["canada"]` for any Canadian search, `["boston"]` for Boston). Leave
+  it empty when none fits; `pnpm scrape:discover` grows their own list after
+  the first scrape.
 - `entry_level` by seniority: **entry** keeps `enabled: true` and
   `max_years_required: 2`; **mid** keeps `enabled: true` and sets
   `max_years_required: 5`; **senior** sets `enabled: false` (every level is

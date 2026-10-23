@@ -172,6 +172,14 @@ test("sponsorship stance is extracted from posting text, negatives first", async
 
   const silent = await buildIngestRecord("greenhouse", base, at);
   assert.equal(silent.sponsorship, "unknown");
+
+  // Canada: employer sponsorship is an LMIA.
+  const noLmia = await buildIngestRecord("greenhouse", { ...base, description: `${base.description} We are not able to provide LMIA support for this role.` }, at);
+  assert.equal(noLmia.sponsorship, "not_offered");
+  const prOnly = await buildIngestRecord("greenhouse", { ...base, description: `${base.description} You must be a Canadian citizen or permanent resident.` }, at);
+  assert.equal(prOnly.sponsorship, "not_offered");
+  const lmia = await buildIngestRecord("greenhouse", { ...base, description: `${base.description} LMIA support is available for this position.` }, at);
+  assert.equal(lmia.sponsorship, "offered");
 });
 
 test("company-level sponsorship hint applies only when the posting is silent", async () => {

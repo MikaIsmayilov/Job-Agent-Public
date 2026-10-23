@@ -52,7 +52,7 @@ def run_boards(cfg: dict, dry_run: bool, limit: int | None) -> list[tuple[str, d
     kept, dropped = apply_filters(normalized, cfg)
     # job_type is stamped per search pass in boards.fetch_board_jobs (several types
     # can be searched in one run, so a blanket default here would mislabel rows).
-    sponsorship.annotate_postings(session(), kept)
+    sponsorship.annotate_postings(session(), kept, cfg=cfg)
     _log(f"[boards] fetched={len(rows)} usable={len(normalized)} kept={len(kept)} dropped={dropped}")
 
     by_site: dict[str, list[dict]] = defaultdict(list)
@@ -67,7 +67,7 @@ def run_boards(cfg: dict, dry_run: bool, limit: int | None) -> list[tuple[str, d
 
 
 def run_ats(cfg: dict, dry_run: bool, company_filter: str | None, limit: int | None) -> list[tuple[str, dict]]:
-    companies = load_companies()
+    companies = load_companies(regions=cfg.get("ats", {}).get("regions") or [])
     if company_filter:
         companies = [company for company in companies if company_filter.lower() in company.name.lower()]
         if not companies:
@@ -91,7 +91,7 @@ def run_ats(cfg: dict, dry_run: bool, company_filter: str | None, limit: int | N
         _log(f"[ats] {company.name} ({company.ats}): fetched={len(postings)} kept={len(kept)} dropped={dropped}")
         if not kept:
             continue
-        sponsorship.annotate_postings(sess, kept, company_name=company.name)
+        sponsorship.annotate_postings(sess, kept, company_name=company.name, cfg=cfg)
         if company.tags:
             for posting in kept:
                 posting["company_tags"] = list(company.tags)
@@ -121,7 +121,7 @@ def run_niche(cfg: dict, dry_run: bool, limit: int | None) -> list[tuple[str, di
         if not kept:
             continue
         _archive(f"niche-{site}", kept)
-        sponsorship.annotate_postings(sess, kept)
+        sponsorship.annotate_postings(sess, kept, cfg=cfg)
         results.append((site, post_batches(cfg["server"]["base_url"], site, kept, dry_run=dry_run)))
     return results
 
@@ -134,7 +134,7 @@ def run_prune(cfg: dict, dry_run: bool) -> None:
     """
     import requests as _requests
 
-    from .filters import is_acceptable_location, is_entry_level, is_relevant
+    from .filters import is_acceptable_location, is_entry_level, is_foreign_title, is_relevant
 
     from datetime import datetime, timedelta, timezone
 
@@ -154,8 +154,7 @@ def run_prune(cfg: dict, dry_run: bool) -> None:
             reasons.append("irrelevant title")
         if not is_acceptable_location(location, cfg):
             reasons.append("foreign location")
-        markers = cfg.get("location", {}).get("exclude_markers", [])
-        if any(marker.lower() in title.lower() for marker in markers):
+        if is_foreign_title(title, cfg):
             reasons.append("foreign title")
         if not is_entry_level(title, description, cfg):
             reasons.append("not entry level")

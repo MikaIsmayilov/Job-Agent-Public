@@ -68,3 +68,38 @@ test("each work-authorization status rules out different postings", () => {
   // Before onboarding nothing is flagged.
   assert.equal(riskFor("not_offered", citizenOnly, "", { status: "unset", holdsClearance: false }), null);
 });
+
+test("Canadian searches use Canadian rules", () => {
+  const ca = (status) => ({ status, holdsClearance: false, country: "CA" });
+  const prOrCitizen = "Applicants must be Canadian citizens or permanent residents.";
+  const citizenOnly = "You must be a Canadian citizen to be considered for this position.";
+  const preference = "Preference will be given to Canadian citizens and permanent residents.";
+  const entitled = "Candidates must be legally entitled to work in Canada.";
+
+  assert.equal(riskFor("unknown", "", prOrCitizen, ca("permanent_resident")), null);
+  assert.equal(riskFor("unknown", "", citizenOnly, ca("permanent_resident"))?.level, "blocker");
+  assert.equal(riskFor("unknown", "", citizenOnly, ca("citizen")), null);
+
+  assert.equal(riskFor("unknown", "", prOrCitizen, ca("open_work_permit"))?.level, "blocker");
+  assert.equal(riskFor("unknown", "", preference, ca("open_work_permit"))?.level, "warning");
+  assert.equal(riskFor("unknown", "", entitled, ca("open_work_permit")), null);
+  assert.equal(riskFor("not_offered", "", "No LMIA support is available.", ca("open_work_permit"))?.level, "warning");
+
+  assert.equal(riskFor("not_offered", "", "No LMIA support is available.", ca("needs_sponsorship"))?.level, "blocker");
+  assert.equal(riskFor("unknown", "", entitled, ca("needs_sponsorship"))?.level, "warning");
+  assert.equal(riskFor("offered", "", `${entitled} LMIA support is available.`, ca("needs_sponsorship")), null);
+  // A U.S.-citizenship line does not bind a Canadian permanent resident in a Canadian search.
+  assert.equal(riskFor("unknown", "", "Must be a U.S. citizen.", ca("permanent_resident")), null);
+  // Clearance applies everywhere.
+  assert.equal(riskFor("unknown", "", "Requires an active Secret clearance.", ca("citizen"))?.level, "blocker");
+});
+
+test("a status from the other country normalizes to unset", async () => {
+  const { normalizeProfile } = await import("../lib/profile.ts");
+  assert.equal(normalizeProfile({ country: "CA", workAuthorization: { status: "opt" } }).workAuthorization.status, "unset");
+  assert.equal(normalizeProfile({ workAuthorization: { status: "open_work_permit" } }).workAuthorization.status, "unset");
+  const canadian = normalizeProfile({ country: "ca", workAuthorization: { status: "open_work_permit" } });
+  assert.equal(canadian.country, "CA");
+  assert.deepEqual(canadian.workAuthorization, { status: "open_work_permit", holdsClearance: false, country: "CA" });
+  assert.equal(normalizeProfile({}).country, "US");
+});

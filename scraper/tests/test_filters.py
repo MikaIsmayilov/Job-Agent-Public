@@ -167,3 +167,47 @@ def test_entry_level_filter_can_be_switched_off():
     cfg["entry_level"]["enabled"] = False
     assert is_entry_level(*senior, cfg)
     assert classify_experience(*senior, cfg) == "senior"
+
+
+CA_CFG = copy.deepcopy(CFG)
+CA_CFG["search"]["country"] = "CA"
+
+
+def test_location_filter_follows_search_country():
+    # Canadian search: provinces are home, US states and US-only remote are foreign.
+    assert is_acceptable_location("Toronto, ON", CA_CFG)
+    assert is_acceptable_location("Toronto, Ontario, Canada", CA_CFG)
+    assert is_acceptable_location("Toronto, ON, CA", CA_CFG)
+    assert is_acceptable_location("London, ON", CA_CFG)
+    assert is_acceptable_location("Remote - Canada", CA_CFG)
+    assert is_acceptable_location("Remote", CA_CFG)
+    assert not is_acceptable_location("Austin, TX", CA_CFG)
+    assert not is_acceptable_location("Remote - USA", CA_CFG)
+    assert not is_acceptable_location("United States", CA_CFG)
+    assert not is_acceptable_location("Remote - US", CA_CFG)
+    assert not is_acceptable_location("Boston, Massachusetts", CA_CFG)
+    assert is_acceptable_location("Mississauga", CA_CFG)
+    assert not is_acceptable_location("San Francisco", CA_CFG)
+    assert not is_acceptable_location("Europe", CA_CFG)
+    assert is_acceptable_location("CAN, Quebec, Montreal", CA_CFG)
+    assert not is_acceptable_location("Bengaluru, India", CA_CFG)
+    # A posting open in both countries survives either search.
+    assert is_acceptable_location("New York, NY or Toronto, Canada", CFG)
+    assert is_acceptable_location("United States; Toronto, Ontario", CFG)
+    assert is_acceptable_location("Toronto, Canada; New York, United States", CA_CFG)
+    # US search still drops Canada-only postings.
+    assert not is_acceptable_location("Toronto, ON, CA", CFG)
+    assert not is_acceptable_location("Vancouver, British Columbia", CFG)
+    # Whole-word home markers: "usa" is not inside "Usak".
+    assert not is_acceptable_location("Usak, Turkey", CFG)
+    # Markers are whole words too.
+    assert is_acceptable_location("Indianapolis", CFG)
+    assert is_acceptable_location("Domaine de Montréal", CA_CFG)
+
+
+def test_apply_filters_title_markers_follow_search_country():
+    posting = {"title": "Data Analyst, Canada", "location": "Toronto, ON", "description": "Entry level analyst role building SQL dashboards and reporting for stakeholders across the Canadian business."}
+    kept_ca, _ = apply_filters([dict(posting)], CA_CFG)
+    kept_us, _ = apply_filters([dict(posting)], CFG)
+    assert len(kept_ca) == 1
+    assert kept_us == []
